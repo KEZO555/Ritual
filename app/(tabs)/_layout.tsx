@@ -3,6 +3,7 @@ import { Navbar, type TabConfigItem } from "@/components/Navbar";
 
 export const TABS_CONFIG: readonly TabConfigItem[] = [
   { name: "Recipes", screenName: "index", iconName: "local-cafe" },
+  { name: "Favorites", screenName: "favorites", iconName: "favorite" },
   { name: "Search", screenName: "search", iconName: "search" },
   { name: "Settings", screenName: "settings", iconName: "settings" },
 ] as const;

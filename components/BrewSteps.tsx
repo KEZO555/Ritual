@@ -5,30 +5,19 @@ import { n } from "@/utils/scaling";
 
 interface BrewStepsProps {
   activeIndex: number;
-  onContainerLayout: (y: number) => void;
-  onStepLayout: (index: number, y: number) => void;
+  onStepRef: (index: number, node: View | null) => void;
   steps: Step[];
 }
 
-export function BrewSteps({
-  steps,
-  activeIndex,
-  onContainerLayout,
-  onStepLayout,
-}: BrewStepsProps) {
+export function BrewSteps({ steps, activeIndex, onStepRef }: BrewStepsProps) {
   return (
-    <View
-      onLayout={(event) => onContainerLayout(event.nativeEvent.layout.y)}
-      style={styles.steps}
-    >
+    <View style={styles.steps}>
       {steps.map((step, index) => {
         const isActive = index === activeIndex;
         return (
           <View
             key={step.instruction}
-            onLayout={(event) =>
-              onStepLayout(index, event.nativeEvent.layout.y)
-            }
+            ref={(node) => onStepRef(index, node)}
             style={styles.step}
           >
             <StyledText style={styles.stepTime}>
@@ -50,6 +39,8 @@ const styles = StyleSheet.create({
   steps: {
     width: "100%",
     gap: n(20),
+    paddingLeft: n(37),
+    paddingRight: n(46),
   },
   step: {
     width: "100%",
@@ -65,6 +56,5 @@ const styles = StyleSheet.create({
   },
   stepTextActive: {
     opacity: 1,
-    textDecorationLine: "underline",
   },
 });

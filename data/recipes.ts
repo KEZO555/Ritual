@@ -74,6 +74,375 @@ export function formatDuration(seconds: number): string {
 
 export const recipes: Recipe[] = [
   {
+    id: "james-hoffmann-aeropress-recipe",
+    name: "James Hoffmann's Ultimate AeroPress Recipe",
+    author: "James Hoffmann",
+    blurb:
+      "A simple recipe that throws away AeroPress misconceptions like rinsing the filter and preheating.",
+    roast: "light",
+    grind: "medium",
+    orientation: "standard",
+    coffeeGrams: 11,
+    waterGrams: 200,
+    waterTempC: 99,
+    c40Clicks: 14,
+    totalSeconds: 200,
+    steps: [
+      {
+        instruction: "Set the brewer in standard position with a paper filter.",
+      },
+      { at: 0, instruction: "Add all 200g of water to fully wet the coffee." },
+      {
+        at: 0,
+        instruction: "Insert the plunger about 1cm to create a vacuum.",
+      },
+      { at: 120, instruction: "Gently swirl the brewer." },
+      { at: 150, instruction: "Let the coffee settle and wait." },
+      { at: 180, instruction: "Press gently for about 30 seconds." },
+      { at: 200, instruction: "Serve and enjoy." },
+    ],
+  },
+  {
+    id: "13g-that-makes-you-happy",
+    name: "13g that makes you happy",
+    author: "Sigit Tri",
+    blurb:
+      "A balanced, sweet cup designed to work across most coffee processes while avoiding under-extraction.",
+    roast: "light",
+    grind: "coarse",
+    orientation: "inverted",
+    coffeeGrams: 13,
+    waterGrams: 180,
+    waterTempC: 90,
+    c40Clicks: 30,
+    totalSeconds: 150,
+    steps: [
+      { instruction: "Set up the AeroPress in the inverted position." },
+      { at: 0, instruction: "Add 13g of coarsely ground coffee." },
+      { at: 0, instruction: "Bloom with 30g water, stir 5 times." },
+      { at: 30, instruction: "Pour water to 180g total and stir 5 times." },
+      { at: 90, instruction: "Flip the AeroPress onto the cup." },
+      { at: 90, instruction: "Press slowly for about one minute." },
+      { at: 150, instruction: "Wait 20-30 seconds, then serve." },
+    ],
+  },
+  {
+    id: "james-hoffmann",
+    name: "James Hoffmann (milk-based)",
+    author: "James Hoffmann",
+    blurb:
+      "A concentrated espresso-style shot built to be topped with warm milk for a milk-based drink.",
+    roast: "dark",
+    grind: "fine",
+    orientation: "inverted",
+    coffeeGrams: 18,
+    waterGrams: 90,
+    waterTempC: 100,
+    c40Clicks: 14,
+    totalSeconds: 120,
+    steps: [
+      {
+        instruction:
+          "Preheat and set up the AeroPress inverted with the plunger pushed halfway in.",
+      },
+      { at: 0, instruction: "Add 18g of coffee." },
+      { at: 0, instruction: "Pour 90g of hot water." },
+      {
+        at: 0,
+        instruction:
+          "Stir aggressively to break up all clumps, then attach the lid.",
+      },
+      { at: 90, instruction: "Flip the AeroPress onto the cup and swirl." },
+      {
+        at: 90,
+        instruction: "Press slowly and gently until just after the hiss.",
+      },
+      { at: 120, instruction: "Top with warm milk to serve." },
+    ],
+  },
+  {
+    id: "love-me-some-acid",
+    name: "Love me some acid",
+    author: "Kata Muhel",
+    blurb:
+      "A recipe that brings out the acidy fruitiness of a vibrant light-roast coffee.",
+    roast: "light",
+    grind: "medium",
+    orientation: "inverted",
+    coffeeGrams: 20,
+    waterGrams: 230,
+    waterTempC: 81,
+    c40Clicks: 24,
+    totalSeconds: 105,
+    steps: [
+      {
+        instruction:
+          "Set up the AeroPress inverted and rinse double paper filters with hot water.",
+      },
+      { at: 0, instruction: "Add 20g coffee and pour 70g water at 81C." },
+      { at: 15, instruction: "Swirl the AeroPress for 15 seconds." },
+      { at: 15, instruction: "Add the remaining water to reach 230g total." },
+      { at: 60, instruction: "Cap the AeroPress." },
+      { at: 80, instruction: "Flip the AeroPress onto the cup." },
+      { at: 90, instruction: "Begin plunging." },
+      { at: 105, instruction: "Finish plunging and serve." },
+    ],
+  },
+  {
+    id: "tim-wendelboe",
+    name: "Tim Wendelboe",
+    author: "Tim Wendelboe",
+    blurb:
+      "The clean, light-roast recipe served at Tim Wendelboe's cafe in Oslo.",
+    roast: "light",
+    grind: "medium",
+    orientation: "standard",
+    coffeeGrams: 14,
+    waterGrams: 200,
+    waterTempC: 96,
+    c40Clicks: 18,
+    totalSeconds: 90,
+    steps: [
+      { instruction: "Rinse the paper filter for about 10 seconds." },
+      { at: 0, instruction: "Add 14g of ground coffee." },
+      { at: 0, instruction: "Pour 200g of water at 96C." },
+      {
+        at: 0,
+        instruction: "Stir 3 times back to front and attach the handle.",
+      },
+      {
+        at: 60,
+        instruction: "Remove the handle and stir 3 times back to front.",
+      },
+      {
+        at: 60,
+        instruction:
+          "Replace the handle and press using body weight into a large cup.",
+      },
+    ],
+  },
+  {
+    id: "smooothy",
+    name: "Smooooothy!",
+    author: "AmirHossein Adib",
+    blurb: "A smooth, sweet and balanced cup tuned for East African coffees.",
+    roast: "light",
+    grind: "medium",
+    orientation: "standard",
+    coffeeGrams: 14,
+    waterGrams: 220,
+    waterTempC: 92,
+    c40Clicks: 20,
+    totalSeconds: 130,
+    steps: [
+      { instruction: "Rinse and preheat two paper filters." },
+      {
+        instruction:
+          "Grind 14g of coffee to medium-fine and add it to the AeroPress.",
+      },
+      { at: 0, instruction: "Bloom with 40g water for 30 seconds." },
+      {
+        at: 30,
+        instruction:
+          "Add 180g more water and seat the plunger without pressing.",
+      },
+      { at: 90, instruction: "Stir once." },
+      { at: 110, instruction: "Press for 20 seconds." },
+      { at: 130, instruction: "Enjoy." },
+    ],
+  },
+  {
+    id: "aeropress-iced-latte",
+    name: "AeroPress Iced Latte",
+    author: "Mark C",
+    blurb:
+      "Dark chocolate, sandalwood and umami seaweed - full bodied with a good kick over ice and milk.",
+    roast: "dark",
+    grind: "medium",
+    orientation: "inverted",
+    coffeeGrams: 18,
+    waterGrams: 60,
+    waterTempC: 92,
+    c40Clicks: 14,
+    totalSeconds: 140,
+    steps: [
+      {
+        instruction:
+          "Grind 18g of beans to medium-fine and wet the paper filter.",
+      },
+      {
+        at: 0,
+        instruction:
+          "Add the grounds, pour 60g hot water and stir continuously for the first 40 seconds.",
+      },
+      { at: 40, instruction: "Cap the AeroPress and let it brew." },
+      {
+        at: 40,
+        instruction: "Meanwhile, add 5 ice cubes and 130g milk to a mug.",
+      },
+      {
+        at: 120,
+        instruction:
+          "Place the AeroPress on the mug and plunge for 20 seconds.",
+      },
+      { at: 140, instruction: "Serve over the iced milk." },
+    ],
+  },
+  {
+    id: "the-only-aeropress-recipe-you-will-ever-need",
+    name: "The only AeroPress recipe you'll ever need",
+    author: "The Coffee Compass",
+    blurb: "A simple, versatile and economical everyday recipe.",
+    roast: "medium",
+    grind: "medium",
+    orientation: "standard",
+    coffeeGrams: 15,
+    waterGrams: 225,
+    waterTempC: 98,
+    c40Clicks: 25,
+    totalSeconds: 270,
+    steps: [
+      {
+        instruction:
+          "Grind 15g of coffee medium and place two rinsed filters in the AeroPress.",
+      },
+      {
+        at: 0,
+        instruction:
+          "Add 225g of near-boiling water briskly and seat the plunger to create a vacuum.",
+      },
+      {
+        at: 60,
+        instruction:
+          "Remove the plunger, gently break the crust with a spoon, and replace the plunger.",
+      },
+      { at: 240, instruction: "Slowly push the plunger all the way down." },
+      { at: 270, instruction: "Decant and drink." },
+    ],
+  },
+  {
+    id: "backpack-of-freedom",
+    name: "Two Big Cups - One Brew",
+    author: "Niklas",
+    blurb: "A larger brew for sharing with a friend or filling a thermos.",
+    roast: "light",
+    grind: "medium",
+    orientation: "standard",
+    coffeeGrams: 30,
+    waterGrams: 400,
+    waterTempC: 93,
+    c40Clicks: 25,
+    totalSeconds: 150,
+    steps: [
+      {
+        instruction:
+          "Preheat the server and AeroPress with warm water and rinse the paper filter.",
+      },
+      {
+        instruction:
+          "Place the AeroPress on the mug and add 30g of coffee grounds.",
+      },
+      { at: 0, instruction: "Add 250g of water to near the top." },
+      {
+        at: 15,
+        instruction:
+          "Stir gently for 15 seconds, then insert the plunger to stop dripping.",
+      },
+      { at: 120, instruction: "Begin pressing for 30-40 seconds." },
+      { at: 150, instruction: "Add the remaining 150g of water, then serve." },
+    ],
+  },
+  {
+    id: "v60-style-aeropress-light",
+    name: "V60 Style Aeropress (light roast)",
+    author: "skelathon0703",
+    blurb: "A V60-style clean brew using a light roast and no bloom.",
+    roast: "light",
+    grind: "fine",
+    orientation: "standard",
+    coffeeGrams: 17,
+    waterGrams: 260,
+    waterTempC: 95,
+    c40Clicks: 15,
+    totalSeconds: 70,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter(s) with hot water and preheat the brewing vessel.",
+      },
+      { instruction: "Add 17g of fine ground coffee." },
+      {
+        at: 0,
+        instruction: "Quickly add 260g of 95C water with no stir and no bloom.",
+      },
+      {
+        at: 0,
+        instruction:
+          "Seat the plunger to create a vacuum and let it steep for 50 seconds.",
+      },
+      {
+        at: 50,
+        instruction: "Press for 20 seconds, stopping before the hiss.",
+      },
+      { at: 70, instruction: "Enjoy." },
+    ],
+  },
+  {
+    id: "aeropress-espresso",
+    name: "AeroPress Espresso",
+    author: "Coffee Lovers TV",
+    blurb: "An espresso-style shot using a fine grind and high pressure.",
+    roast: "dark",
+    grind: "fine",
+    orientation: "standard",
+    coffeeGrams: 20,
+    waterGrams: 60,
+    waterTempC: 98,
+    c40Clicks: 15,
+    totalSeconds: 30,
+    steps: [
+      {
+        instruction:
+          "Pre-wet the filter and warm the cup, then set up the AeroPress upright.",
+      },
+      { instruction: "Add 20g of coffee to the chamber." },
+      { at: 0, instruction: "Add 60g of boiling water within 10 seconds." },
+      {
+        at: 10,
+        instruction: "Stir for 10 seconds to saturate all the grounds.",
+      },
+      { at: 20, instruction: "Plunge as quickly as possible." },
+    ],
+  },
+  {
+    id: "for-the-sweetest-cup",
+    name: "For the sweetest cup",
+    author: "Damaring Kalpika",
+    blurb:
+      "A sweet, clean cup with bright acidity, refined from a championship method.",
+    roast: "light",
+    grind: "medium",
+    orientation: "inverted",
+    coffeeGrams: 24,
+    waterGrams: 240,
+    waterTempC: 92,
+    c40Clicks: 25,
+    totalSeconds: 120,
+    steps: [
+      { instruction: "Pre-wet the double paper filter and warm the cup." },
+      { at: 0, instruction: "Pour 60g of water and stir gently 15-20 times." },
+      {
+        at: 30,
+        instruction:
+          "Pour 180g of water in a circular motion and stir thoroughly for 10 seconds.",
+      },
+      { at: 40, instruction: "Cap and wait." },
+      { at: 60, instruction: "Flip onto the preheated cup." },
+      { at: 60, instruction: "Press slowly for one minute." },
+      { at: 120, instruction: "Add 48g of water, stir and serve." },
+    ],
+  },
+  {
     id: "hoffmann-ultimate",
     name: "The Ultimate AeroPress",
     author: "James Hoffmann",

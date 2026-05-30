@@ -1,14 +1,23 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { TextInput as RNTextInput, StyleSheet, View } from "react-native";
+import {
+  type KeyboardTypeOptions,
+  type ReturnKeyTypeOptions,
+  TextInput as RNTextInput,
+  StyleSheet,
+  View,
+} from "react-native";
 import { HapticPressable } from "@/components/HapticPressable";
 import { useInvertColors } from "@/contexts/InvertColorsContext";
 import { n } from "@/utils/scaling";
 
 interface TextInputProps {
+  autoCapitalize?: "none" | "sentences" | "words" | "characters";
   autoFocus?: boolean;
+  keyboardType?: KeyboardTypeOptions;
   onChangeText: (text: string) => void;
   onSubmit?: () => void;
   placeholder: string;
+  returnKeyType?: ReturnKeyTypeOptions;
   value: string;
 }
 
@@ -18,6 +27,9 @@ export function TextInput({
   placeholder,
   onSubmit,
   autoFocus = false,
+  autoCapitalize = "none",
+  keyboardType = "default",
+  returnKeyType = "search",
 }: TextInputProps) {
   const { invertColors } = useInvertColors();
 
@@ -32,15 +44,16 @@ export function TextInput({
     <View style={[styles.container, { borderBottomColor: borderColor }]}>
       <RNTextInput
         allowFontScaling={false}
-        autoCapitalize="none"
+        autoCapitalize={autoCapitalize}
         autoCorrect={false}
         autoFocus={autoFocus}
         cursorColor={textColor}
+        keyboardType={keyboardType}
         onChangeText={onChangeText}
         onSubmitEditing={onSubmit}
         placeholder={placeholder}
         placeholderTextColor={textColor}
-        returnKeyType="search"
+        returnKeyType={returnKeyType}
         selectionColor={textColor}
         style={[styles.input, { color: textColor }]}
         value={value}

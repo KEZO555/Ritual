@@ -7,6 +7,7 @@ import { n } from "@/utils/scaling";
 
 interface BrewTimerProps {
   elapsed: number;
+  onMeasureHeight?: (height: number) => void;
   onReset: () => void;
   onToggle: () => void;
   running: boolean;
@@ -17,13 +18,17 @@ export function BrewTimer({
   running,
   onToggle,
   onReset,
+  onMeasureHeight,
 }: BrewTimerProps) {
   const { invertColors } = useInvertColors();
   const bg = invertColors ? "white" : "black";
   const fg = invertColors ? "black" : "white";
 
   return (
-    <View style={[styles.container, { backgroundColor: bg, borderColor: fg }]}>
+    <View
+      onLayout={(event) => onMeasureHeight?.(event.nativeEvent.layout.height)}
+      style={[styles.container, { backgroundColor: bg, borderColor: fg }]}
+    >
       <StyledText style={styles.time}>{formatDuration(elapsed)}</StyledText>
       <View style={styles.controls}>
         <HapticPressable onPress={onToggle}>
@@ -41,15 +46,15 @@ export function BrewTimer({
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    right: n(20),
-    bottom: n(20),
-    alignItems: "flex-end",
-    paddingVertical: n(10),
-    paddingHorizontal: n(16),
-    borderWidth: n(1),
-    borderRadius: n(14),
-    gap: n(4),
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: n(8),
+    paddingBottom: n(12),
+    paddingLeft: n(37),
+    paddingRight: n(46),
+    borderBottomWidth: n(1),
   },
   time: {
     fontSize: n(40),
@@ -59,6 +64,6 @@ const styles = StyleSheet.create({
     gap: n(20),
   },
   control: {
-    fontSize: n(20),
+    fontSize: n(22),
   },
 });
