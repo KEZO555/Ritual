@@ -96,20 +96,20 @@ export const recipes: Recipe[] = [
     waterGrams: 200,
     waterTempC: 99,
     c40Clicks: 14,
-    totalSeconds: 200,
+    totalSeconds: 210,
     steps: [
       {
         instruction: "Set the brewer in standard position with a paper filter.",
       },
       { at: 0, instruction: "Add all 200g of water to fully wet the coffee." },
       {
-        at: 0,
+        at: 10,
         instruction: "Insert the plunger about 1cm to create a vacuum.",
       },
       { at: 120, instruction: "Gently swirl the brewer." },
       { at: 150, instruction: "Let the coffee settle and wait." },
       { at: 180, instruction: "Press gently for about 30 seconds." },
-      { at: 200, instruction: "Serve and enjoy." },
+      { at: 210, instruction: "Serve and enjoy." },
     ],
   },
   {
@@ -129,11 +129,11 @@ export const recipes: Recipe[] = [
     totalSeconds: 150,
     steps: [
       { instruction: "Set up the AeroPress in the inverted position." },
-      { at: 0, instruction: "Add 13g of coarsely ground coffee." },
+      { instruction: "Add 13g of coarsely ground coffee." },
       { at: 0, instruction: "Bloom with 30g water, stir 5 times." },
       { at: 30, instruction: "Pour water to 180g total and stir 5 times." },
       { at: 90, instruction: "Flip the AeroPress onto the cup." },
-      { at: 90, instruction: "Press slowly for about one minute." },
+      { at: 95, instruction: "Press slowly for about one minute." },
       { at: 150, instruction: "Wait 20-30 seconds, then serve." },
     ],
   },
@@ -157,16 +157,16 @@ export const recipes: Recipe[] = [
         instruction:
           "Preheat and set up the AeroPress inverted with the plunger pushed halfway in.",
       },
-      { at: 0, instruction: "Add 18g of coffee." },
+      { instruction: "Add 18g of coffee." },
       { at: 0, instruction: "Pour 90g of hot water." },
       {
-        at: 0,
+        at: 10,
         instruction:
           "Stir aggressively to break up all clumps, then attach the lid.",
       },
       { at: 90, instruction: "Flip the AeroPress onto the cup and swirl." },
       {
-        at: 90,
+        at: 95,
         instruction: "Press slowly and gently until just after the hiss.",
       },
       { at: 120, instruction: "Top with warm milk to serve." },
@@ -194,7 +194,7 @@ export const recipes: Recipe[] = [
       },
       { at: 0, instruction: "Add 20g coffee and pour 70g water at 81C." },
       { at: 15, instruction: "Swirl the AeroPress for 15 seconds." },
-      { at: 15, instruction: "Add the remaining water to reach 230g total." },
+      { at: 30, instruction: "Add the remaining water to reach 230g total." },
       { at: 60, instruction: "Cap the AeroPress." },
       { at: 80, instruction: "Flip the AeroPress onto the cup." },
       { at: 90, instruction: "Begin plunging." },
@@ -218,10 +218,10 @@ export const recipes: Recipe[] = [
     totalSeconds: 90,
     steps: [
       { instruction: "Rinse the paper filter for about 10 seconds." },
-      { at: 0, instruction: "Add 14g of ground coffee." },
+      { instruction: "Add 14g of ground coffee." },
       { at: 0, instruction: "Pour 200g of water at 96C." },
       {
-        at: 0,
+        at: 10,
         instruction: "Stir 3 times back to front and attach the handle.",
       },
       {
@@ -229,7 +229,7 @@ export const recipes: Recipe[] = [
         instruction: "Remove the handle and stir 3 times back to front.",
       },
       {
-        at: 60,
+        at: 65,
         instruction:
           "Replace the handle and press using body weight into a large cup.",
       },
@@ -293,7 +293,7 @@ export const recipes: Recipe[] = [
       },
       { at: 40, instruction: "Cap the AeroPress and let it brew." },
       {
-        at: 40,
+        at: 45,
         instruction: "Meanwhile, add 5 ice cubes and 130g milk to a mug.",
       },
       {
@@ -395,9 +395,8 @@ export const recipes: Recipe[] = [
         instruction: "Quickly add 260g of 95C water with no stir and no bloom.",
       },
       {
-        at: 0,
-        instruction:
-          "Seat the plunger to create a vacuum and let it steep for 50 seconds.",
+        at: 10,
+        instruction: "Seat the plunger to create a vacuum and let it steep.",
       },
       {
         at: 50,
@@ -459,7 +458,7 @@ export const recipes: Recipe[] = [
       },
       { at: 40, instruction: "Cap and wait." },
       { at: 60, instruction: "Flip onto the preheated cup." },
-      { at: 60, instruction: "Press slowly for one minute." },
+      { at: 65, instruction: "Press slowly for one minute." },
       { at: 120, instruction: "Add 48g of water, stir and serve." },
     ],
   },
@@ -991,10 +990,10 @@ export const recipes: Recipe[] = [
       },
       {
         at: 45,
-        instruction: "Pour steadily up to 300g, keeping the water high.",
+        instruction: "Pour steadily up to 300g, finishing by 1:15.",
       },
-      { at: 75, instruction: "Pour up to 500g total, finishing by 1:15." },
-      { at: 80, instruction: "Gently swirl the slurry to flatten the bed." },
+      { at: 75, instruction: "Pour up to 500g total, finishing by 1:45." },
+      { at: 105, instruction: "Gently swirl the slurry to flatten the bed." },
       { at: 225, instruction: "Let it draw down completely, then serve." },
     ],
   },
@@ -1020,7 +1019,7 @@ export const recipes: Recipe[] = [
       { at: 45, instruction: "Pour to 120g total to set the sweetness." },
       { at: 90, instruction: "Pour to 180g total." },
       { at: 135, instruction: "Pour to 240g total." },
-      { at: 165, instruction: "Pour to 300g total to set the strength." },
+      { at: 180, instruction: "Pour to 300g total to set the strength." },
       { at: 210, instruction: "Let it drain fully and serve." },
     ],
   },
