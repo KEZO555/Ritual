@@ -24,6 +24,7 @@ import {
   formatDuration,
   GRIND_LABELS,
   getRecipe,
+  METHOD_LABELS,
   ORIENTATION_LABELS,
   ROAST_LABELS,
 } from "@/data/recipes";
@@ -31,7 +32,11 @@ import { useBrewTimer } from "@/hooks/useBrewTimer";
 import { useScrollIndicator } from "@/hooks/useScrollIndicator";
 import { n } from "@/utils/scaling";
 
-const STICKY_TIMER_INDEX = 6;
+// ScrollView sticky index counts rendered children. The "Without a scale"
+// section (toggle + visual) adds two children, and it only renders for
+// AeroPress, so the timer sits two positions earlier for other methods.
+const STICKY_TIMER_INDEX_AEROPRESS = 6;
+const STICKY_TIMER_INDEX_OTHER = 4;
 
 function Spec({ label, value }: { label: string; value: string }) {
   return (
@@ -105,6 +110,10 @@ export default function RecipeScreen() {
       ? Math.round((recipe.waterGrams / recipe.coffeeGrams) * 10) / 10
       : null;
   const accent = invertColors ? "black" : "white";
+  const stickyTimerIndex =
+    recipe.method === "aeropress"
+      ? STICKY_TIMER_INDEX_AEROPRESS
+      : STICKY_TIMER_INDEX_OTHER;
 
   const handleBack = () => {
     if (router.canGoBack()) {
@@ -139,7 +148,7 @@ export default function RecipeScreen() {
             ref={scrollRef}
             scrollEventThrottle={16}
             showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[STICKY_TIMER_INDEX]}
+            stickyHeaderIndices={[stickyTimerIndex]}
             style={styles.scroll}
           >
             <StyledText style={[styles.row, styles.author]}>
@@ -154,33 +163,40 @@ export default function RecipeScreen() {
               <Spec label="Ratio" value={ratio === null ? "-" : `1:${ratio}`} />
               <Spec label="Temp" value={`${recipe.waterTempC}C`} />
               <Spec label="Time" value={formatDuration(recipe.totalSeconds)} />
+              <Spec label="Method" value={METHOD_LABELS[recipe.method]} />
               <Spec label="Roast" value={ROAST_LABELS[recipe.roast]} />
               <Spec label="Grind" value={GRIND_LABELS[recipe.grind]} />
-              <Spec
-                label="Orientation"
-                value={ORIENTATION_LABELS[recipe.orientation]}
-              />
-              <Spec label="C40 clicks" value={`${recipe.c40Clicks}`} />
-            </View>
-            <HapticPressable
-              onPress={() => setShowNoScale((value) => !value)}
-              style={[styles.row, styles.toggle]}
-            >
-              <StyledText style={styles.sectionTitle}>
-                Without a scale
-              </StyledText>
-              <StyledText style={styles.toggleHint}>
-                {showNoScale ? "Hide" : "Show"}
-              </StyledText>
-            </HapticPressable>
-            <View style={styles.row}>
-              {showNoScale ? (
-                <BrewVisual
-                  coffeeGrams={recipe.coffeeGrams}
-                  waterGrams={recipe.waterGrams}
+              {recipe.orientation ? (
+                <Spec
+                  label="Orientation"
+                  value={ORIENTATION_LABELS[recipe.orientation]}
                 />
               ) : null}
+              <Spec label="C40 clicks" value={`${recipe.c40Clicks}`} />
             </View>
+            {recipe.method === "aeropress" ? (
+              <>
+                <HapticPressable
+                  onPress={() => setShowNoScale((value) => !value)}
+                  style={[styles.row, styles.toggle]}
+                >
+                  <StyledText style={styles.sectionTitle}>
+                    Without a scale
+                  </StyledText>
+                  <StyledText style={styles.toggleHint}>
+                    {showNoScale ? "Hide" : "Show"}
+                  </StyledText>
+                </HapticPressable>
+                <View style={styles.row}>
+                  {showNoScale ? (
+                    <BrewVisual
+                      coffeeGrams={recipe.coffeeGrams}
+                      waterGrams={recipe.waterGrams}
+                    />
+                  ) : null}
+                </View>
+              </>
+            ) : null}
             <StyledText style={[styles.row, styles.sectionTitle]}>
               Brew
             </StyledText>

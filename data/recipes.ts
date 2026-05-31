@@ -1,6 +1,7 @@
 export type Roast = "light" | "medium" | "dark";
 export type Grind = "fine" | "medium" | "coarse";
 export type Orientation = "standard" | "inverted";
+export type BrewMethod = "aeropress" | "v60";
 export type BrewTime = "short" | "medium" | "long";
 
 export interface Step {
@@ -17,8 +18,11 @@ export interface Recipe {
   coffeeGrams: number;
   grind: Grind;
   id: string;
+  // The brewer this recipe is written for.
+  method: BrewMethod;
   name: string;
-  orientation: Orientation;
+  // AeroPress chamber orientation. Omitted for methods without one (e.g. V60).
+  orientation?: Orientation;
   roast: Roast;
   steps: Step[];
   // Total brew time in seconds, from pour to finished press.
@@ -42,6 +46,11 @@ export const GRIND_LABELS: Record<Grind, string> = {
 export const ORIENTATION_LABELS: Record<Orientation, string> = {
   standard: "Standard",
   inverted: "Inverted",
+};
+
+export const METHOD_LABELS: Record<BrewMethod, string> = {
+  aeropress: "AeroPress",
+  v60: "V60",
 };
 
 export const BREW_TIME_LABELS: Record<BrewTime, string> = {
@@ -82,6 +91,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 11,
     waterGrams: 200,
     waterTempC: 99,
@@ -111,6 +121,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "coarse",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 13,
     waterGrams: 180,
     waterTempC: 90,
@@ -135,6 +146,7 @@ export const recipes: Recipe[] = [
     roast: "dark",
     grind: "fine",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 18,
     waterGrams: 90,
     waterTempC: 100,
@@ -169,6 +181,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 20,
     waterGrams: 230,
     waterTempC: 81,
@@ -197,6 +210,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 14,
     waterGrams: 200,
     waterTempC: 96,
@@ -229,6 +243,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 14,
     waterGrams: 220,
     waterTempC: 92,
@@ -260,6 +275,7 @@ export const recipes: Recipe[] = [
     roast: "dark",
     grind: "medium",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 18,
     waterGrams: 60,
     waterTempC: 92,
@@ -296,6 +312,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 15,
     waterGrams: 225,
     waterTempC: 98,
@@ -328,6 +345,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 30,
     waterGrams: 400,
     waterTempC: 93,
@@ -360,6 +378,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "fine",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 17,
     waterGrams: 260,
     waterTempC: 95,
@@ -395,6 +414,7 @@ export const recipes: Recipe[] = [
     roast: "dark",
     grind: "fine",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 20,
     waterGrams: 60,
     waterTempC: 98,
@@ -423,6 +443,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 24,
     waterGrams: 240,
     waterTempC: 92,
@@ -450,6 +471,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "fine",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 11,
     waterGrams: 200,
     waterTempC: 95,
@@ -483,6 +505,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 14,
     waterGrams: 220,
     waterTempC: 94,
@@ -504,6 +527,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 18,
     waterGrams: 220,
     waterTempC: 82,
@@ -526,6 +550,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 15,
     waterGrams: 230,
     waterTempC: 92,
@@ -547,6 +572,7 @@ export const recipes: Recipe[] = [
     roast: "dark",
     grind: "fine",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 20,
     waterGrams: 60,
     waterTempC: 88,
@@ -568,6 +594,7 @@ export const recipes: Recipe[] = [
     roast: "dark",
     grind: "medium",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 17,
     waterGrams: 240,
     waterTempC: 85,
@@ -589,6 +616,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "fine",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 16,
     waterGrams: 230,
     waterTempC: 90,
@@ -611,6 +639,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "fine",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 14,
     waterGrams: 200,
     waterTempC: 93,
@@ -632,6 +661,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "coarse",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 18,
     waterGrams: 250,
     waterTempC: 90,
@@ -653,6 +683,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "fine",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 20,
     waterGrams: 200,
     waterTempC: 96,
@@ -675,6 +706,7 @@ export const recipes: Recipe[] = [
     roast: "dark",
     grind: "coarse",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 16,
     waterGrams: 240,
     waterTempC: 80,
@@ -696,6 +728,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "fine",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 22,
     waterGrams: 120,
     waterTempC: 90,
@@ -717,6 +750,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "coarse",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 13,
     waterGrams: 220,
     waterTempC: 92,
@@ -738,6 +772,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "fine",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 17,
     waterGrams: 230,
     waterTempC: 91,
@@ -759,6 +794,7 @@ export const recipes: Recipe[] = [
     roast: "dark",
     grind: "fine",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 18,
     waterGrams: 180,
     waterTempC: 86,
@@ -780,6 +816,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "coarse",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 16,
     waterGrams: 250,
     waterTempC: 92,
@@ -801,6 +838,7 @@ export const recipes: Recipe[] = [
     roast: "dark",
     grind: "fine",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 19,
     waterGrams: 50,
     waterTempC: 87,
@@ -822,6 +860,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 13,
     waterGrams: 210,
     waterTempC: 93,
@@ -844,6 +883,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "medium",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 16,
     waterGrams: 230,
     waterTempC: 90,
@@ -865,6 +905,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "fine",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 18,
     waterGrams: 120,
     waterTempC: 92,
@@ -889,6 +930,7 @@ export const recipes: Recipe[] = [
     roast: "medium",
     grind: "coarse",
     orientation: "standard",
+    method: "aeropress",
     coffeeGrams: 17,
     waterGrams: 240,
     waterTempC: 89,
@@ -911,6 +953,7 @@ export const recipes: Recipe[] = [
     roast: "light",
     grind: "fine",
     orientation: "inverted",
+    method: "aeropress",
     coffeeGrams: 16,
     waterGrams: 240,
     waterTempC: 94,
@@ -923,6 +966,150 @@ export const recipes: Recipe[] = [
       { at: 290, instruction: "Cap and flip onto the cup." },
       { at: 305, instruction: "Press slowly over 15 seconds." },
       { at: 320, instruction: "Finish." },
+    ],
+  },
+  {
+    id: "hoffmann-v60-ultimate",
+    name: "Hoffmann's Ultimate V60",
+    author: "James Hoffmann",
+    blurb:
+      "His one-cup V60 method: a high dose, a quick bloom and a gentle two-stage pour for a sweet, even cup.",
+    roast: "light",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 30,
+    waterGrams: 500,
+    waterTempC: 95,
+    c40Clicks: 28,
+    totalSeconds: 225,
+    steps: [
+      { instruction: "Rinse the paper filter with hot water and discard it." },
+      { instruction: "Add 30g of coffee and make a small well in the centre." },
+      {
+        at: 0,
+        instruction: "Pour 60g to bloom, then swirl to wet all grounds.",
+      },
+      {
+        at: 45,
+        instruction: "Pour steadily up to 300g, keeping the water high.",
+      },
+      { at: 75, instruction: "Pour up to 500g total, finishing by 1:15." },
+      { at: 80, instruction: "Gently swirl the slurry to flatten the bed." },
+      { at: 225, instruction: "Let it draw down completely, then serve." },
+    ],
+  },
+  {
+    id: "kasuya-46-method",
+    name: "Tetsu Kasuya 4:6 Method",
+    author: "Tetsu Kasuya",
+    blurb:
+      "The World Brewers Cup method. The first 40% of water dials in sweetness and acidity; the last 60% sets the strength.",
+    roast: "light",
+    grind: "coarse",
+    method: "v60",
+    coffeeGrams: 20,
+    waterGrams: 300,
+    waterTempC: 92,
+    c40Clicks: 30,
+    totalSeconds: 210,
+    steps: [
+      {
+        instruction: "Rinse the filter and add 20g of coarsely ground coffee.",
+      },
+      { at: 0, instruction: "Pour 50g and let it bloom." },
+      { at: 45, instruction: "Pour to 120g total to set the sweetness." },
+      { at: 90, instruction: "Pour to 180g total." },
+      { at: 135, instruction: "Pour to 240g total." },
+      { at: 165, instruction: "Pour to 300g total to set the strength." },
+      { at: 210, instruction: "Let it drain fully and serve." },
+    ],
+  },
+  {
+    id: "onyx-v60",
+    name: "Onyx Classic V60",
+    author: "Onyx Coffee Lab",
+    blurb:
+      "A balanced cafe-standard pour-over with a short bloom and three even pulse pours.",
+    roast: "medium",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 22,
+    waterGrams: 350,
+    waterTempC: 96,
+    c40Clicks: 25,
+    totalSeconds: 210,
+    steps: [
+      { instruction: "Rinse the filter and add 22g of medium ground coffee." },
+      { at: 0, instruction: "Pour 50g to bloom and stir gently." },
+      { at: 45, instruction: "Pour to 150g total in slow circles." },
+      { at: 90, instruction: "Pour to 250g total." },
+      { at: 130, instruction: "Pour to 350g total." },
+      { at: 210, instruction: "Let the bed draw down and serve." },
+    ],
+  },
+  {
+    id: "hedrick-beginner-pour-over",
+    name: "Lance Hedrick Beginner Pour Over",
+    author: "Lance Hedrick",
+    blurb:
+      "A forgiving, high-agitation single pour that is hard to get wrong and easy to dial in.",
+    roast: "medium",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 15,
+    waterGrams: 250,
+    waterTempC: 99,
+    c40Clicks: 22,
+    totalSeconds: 195,
+    steps: [
+      { instruction: "Rinse the filter and add 15g of coffee." },
+      { at: 0, instruction: "Pour 50g to bloom and swirl hard to saturate." },
+      { at: 45, instruction: "Pour in a steady stream to 250g total." },
+      { at: 75, instruction: "Swirl gently to settle the bed." },
+      { at: 195, instruction: "Let it draw down fully and serve." },
+    ],
+  },
+  {
+    id: "wendelboe-v60",
+    name: "Wendelboe Nordic V60",
+    author: "Tim Wendelboe",
+    blurb: "A clean, tea-like pour-over for delicate Nordic light roasts.",
+    roast: "light",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 15,
+    waterGrams: 250,
+    waterTempC: 96,
+    c40Clicks: 26,
+    totalSeconds: 180,
+    steps: [
+      { instruction: "Rinse the filter and add 15g of medium ground coffee." },
+      { at: 0, instruction: "Pour 40g to bloom for 30 seconds." },
+      { at: 30, instruction: "Pour slowly to 150g total." },
+      { at: 75, instruction: "Pour to 250g total." },
+      { at: 180, instruction: "Let it finish dripping and serve." },
+    ],
+  },
+  {
+    id: "april-simple-v60",
+    name: "April Simple V60",
+    author: "April Coffee",
+    blurb:
+      "A modern, low-agitation recipe with three pours for a clean, sweet, repeatable cup.",
+    roast: "light",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 18,
+    waterGrams: 300,
+    waterTempC: 96,
+    c40Clicks: 24,
+    totalSeconds: 195,
+    steps: [
+      { instruction: "Rinse the filter and add 18g of coffee." },
+      { at: 0, instruction: "Pour 50g to bloom and swirl." },
+      { at: 45, instruction: "Pour to 150g total." },
+      { at: 90, instruction: "Pour to 300g total." },
+      { at: 195, instruction: "Let it draw down and serve." },
     ],
   },
 ];
@@ -940,15 +1127,27 @@ export interface Category {
 
 export const categories: Category[] = [
   {
+    id: "aeropress",
+    name: "AeroPress",
+    blurb: "Every AeroPress recipe",
+    match: (recipe) => recipe.method === "aeropress",
+  },
+  {
+    id: "pour-over",
+    name: "Pour over",
+    blurb: "V60 pour-over recipes",
+    match: (recipe) => recipe.method === "v60",
+  },
+  {
     id: "espresso-short",
     name: "Espresso & short",
     blurb: "Small, intense concentrates",
     match: (recipe) => recipe.waterGrams <= 120,
   },
   {
-    id: "v60-style",
-    name: "V60 style",
-    blurb: "Clean, filter-like clarity",
+    id: "filter-style",
+    name: "Filter style",
+    blurb: "Clean, tea-like clarity",
     match: (recipe) =>
       recipe.orientation === "standard" && recipe.grind !== "fine",
   },
@@ -995,6 +1194,7 @@ export function categoryRecipes(category: Category): Recipe[] {
 export interface Filters {
   brewTime: BrewTime | null;
   grind: Grind | null;
+  method: BrewMethod | null;
   orientation: Orientation | null;
   roast: Roast | null;
 }
@@ -1005,6 +1205,9 @@ export function filterRecipes(filters: Filters): Recipe[] {
       return false;
     }
     if (filters.grind && recipe.grind !== filters.grind) {
+      return false;
+    }
+    if (filters.method && recipe.method !== filters.method) {
       return false;
     }
     if (filters.orientation && recipe.orientation !== filters.orientation) {

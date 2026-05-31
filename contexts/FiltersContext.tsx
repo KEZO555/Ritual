@@ -4,6 +4,7 @@ import type { Filters } from "@/data/recipes";
 const EMPTY_FILTERS: Filters = {
   roast: null,
   grind: null,
+  method: null,
   orientation: null,
   brewTime: null,
 };

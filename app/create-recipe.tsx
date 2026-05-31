@@ -7,8 +7,10 @@ import { StyledText } from "@/components/StyledText";
 import { TextInput } from "@/components/TextInput";
 import { useUserRecipes } from "@/contexts/UserRecipesContext";
 import {
+  type BrewMethod,
   GRIND_LABELS,
   type Grind,
+  METHOD_LABELS,
   ORIENTATION_LABELS,
   type Orientation,
   type Recipe,
@@ -18,6 +20,7 @@ import {
 } from "@/data/recipes";
 import { n } from "@/utils/scaling";
 
+const METHODS: BrewMethod[] = ["aeropress", "v60"];
 const ROASTS: Roast[] = ["light", "medium", "dark"];
 const GRINDS: Grind[] = ["fine", "medium", "coarse"];
 const ORIENTATIONS: Orientation[] = ["standard", "inverted"];
@@ -77,6 +80,7 @@ export default function CreateRecipeScreen() {
   const [water, setWater] = useState("");
   const [temp, setTemp] = useState("");
   const [clicks, setClicks] = useState("");
+  const [methodIndex, setMethodIndex] = useState(0);
   const [roastIndex, setRoastIndex] = useState(0);
   const [grindIndex, setGrindIndex] = useState(1);
   const [orientationIndex, setOrientationIndex] = useState(0);
@@ -118,20 +122,24 @@ export default function CreateRecipeScreen() {
       0
     );
 
+    const method = METHODS[methodIndex];
     const recipe: Recipe = {
       id: `user-${Date.now()}`,
       name: name.trim(),
       author: author.trim() || "You",
       blurb: blurb.trim(),
+      method,
       roast: ROASTS[roastIndex],
       grind: GRINDS[grindIndex],
-      orientation: ORIENTATIONS[orientationIndex],
       coffeeGrams: Number(coffee) || 0,
       waterGrams: Number(water) || 0,
       waterTempC: Number(temp) || 0,
       c40Clicks: Number(clicks) || 0,
       totalSeconds,
       steps: parsedSteps,
+      ...(method === "aeropress"
+        ? { orientation: ORIENTATIONS[orientationIndex] }
+        : {}),
     };
 
     addRecipe(recipe);
@@ -190,6 +198,12 @@ export default function CreateRecipeScreen() {
         value={clicks}
       />
       <Cycler
+        label="Method"
+        labels={METHOD_LABELS}
+        onPress={() => setMethodIndex((i) => (i + 1) % METHODS.length)}
+        value={METHODS[methodIndex]}
+      />
+      <Cycler
         label="Roast"
         labels={ROAST_LABELS}
         onPress={() => setRoastIndex((i) => (i + 1) % ROASTS.length)}
@@ -201,14 +215,16 @@ export default function CreateRecipeScreen() {
         onPress={() => setGrindIndex((i) => (i + 1) % GRINDS.length)}
         value={GRINDS[grindIndex]}
       />
-      <Cycler
-        label="Orientation"
-        labels={ORIENTATION_LABELS}
-        onPress={() =>
-          setOrientationIndex((i) => (i + 1) % ORIENTATIONS.length)
-        }
-        value={ORIENTATIONS[orientationIndex]}
-      />
+      {METHODS[methodIndex] === "aeropress" ? (
+        <Cycler
+          label="Orientation"
+          labels={ORIENTATION_LABELS}
+          onPress={() =>
+            setOrientationIndex((i) => (i + 1) % ORIENTATIONS.length)
+          }
+          value={ORIENTATIONS[orientationIndex]}
+        />
+      ) : null}
 
       <StyledText style={styles.sectionTitle}>Steps</StyledText>
       {steps.map((step, index) => (

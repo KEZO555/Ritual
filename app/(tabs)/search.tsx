@@ -6,6 +6,7 @@ import { useFilters } from "@/contexts/FiltersContext";
 import {
   BREW_TIME_LABELS,
   GRIND_LABELS,
+  METHOD_LABELS,
   ORIENTATION_LABELS,
   ROAST_LABELS,
 } from "@/data/recipes";
@@ -18,6 +19,7 @@ export default function SearchScreen() {
   const hasFilters =
     filters.roast !== null ||
     filters.grind !== null ||
+    filters.method !== null ||
     filters.orientation !== null ||
     filters.brewTime !== null;
 
@@ -30,6 +32,11 @@ export default function SearchScreen() {
         onPress: () => router.push("/search-results"),
       }}
     >
+      <SelectorButton
+        href="/filters/method"
+        label="Method"
+        value={filters.method ? METHOD_LABELS[filters.method] : ANY}
+      />
       <SelectorButton
         href="/filters/roast"
         label="Roast"
