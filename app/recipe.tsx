@@ -30,6 +30,7 @@ import {
 } from "@/data/recipes";
 import { useBrewTimer } from "@/hooks/useBrewTimer";
 import { useScrollIndicator } from "@/hooks/useScrollIndicator";
+import { triggerStepHaptic } from "@/utils/haptics";
 import { n } from "@/utils/scaling";
 
 function Spec({ label, value }: { label: string; value: string }) {
@@ -66,6 +67,16 @@ export default function RecipeScreen() {
   const scrollWrapperRef = useRef<View>(null);
   const stepRefs = useRef<(View | null)[]>([]);
   const scrollOffset = useRef(0);
+  const buzzedIndex = useRef(-1);
+
+  // Buzz when the running brew advances to a new step so it's noticeable
+  // without watching the screen. Taps/seeks already give their own feedback.
+  useEffect(() => {
+    if (running && activeIndex >= 0 && activeIndex !== buzzedIndex.current) {
+      triggerStepHaptic();
+    }
+    buzzedIndex.current = activeIndex;
+  }, [running, activeIndex]);
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollOffset.current = event.nativeEvent.contentOffset.y;
