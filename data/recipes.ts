@@ -1111,10 +1111,167 @@ export const recipes: Recipe[] = [
       { at: 195, instruction: "Let it draw down and serve." },
     ],
   },
+  {
+    id: "scott-rao-v60",
+    name: "Scott Rao V60",
+    author: "Scott Rao",
+    blurb:
+      "A single continuous pour after the bloom, finished with a gentle spin for an even, flat bed.",
+    roast: "medium",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 22,
+    waterGrams: 360,
+    waterTempC: 96,
+    c40Clicks: 24,
+    totalSeconds: 225,
+    steps: [
+      { instruction: "Rinse the filter and add 22g of coffee." },
+      { at: 0, instruction: "Pour 60g to bloom and stir to saturate." },
+      { at: 45, instruction: "Pour in one steady stream up to 360g total." },
+      {
+        at: 90,
+        instruction: "Give the slurry a gentle spin to flatten the bed.",
+      },
+      { at: 225, instruction: "Let it draw down fully and serve." },
+    ],
+  },
+  {
+    id: "matt-winton-v60",
+    name: "Matt Winton Competition V60",
+    author: "Matt Winton",
+    blurb:
+      "A five-pour championship recipe: equal 60g pours every 30 seconds for a clean, sweet, repeatable cup.",
+    roast: "light",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 20,
+    waterGrams: 300,
+    waterTempC: 95,
+    c40Clicks: 26,
+    totalSeconds: 210,
+    steps: [
+      { instruction: "Rinse the filter and add 20g of coffee." },
+      { at: 0, instruction: "Pour to 60g and let it bloom." },
+      { at: 30, instruction: "Pour to 120g total." },
+      { at: 60, instruction: "Pour to 180g total." },
+      { at: 90, instruction: "Pour to 240g total." },
+      { at: 120, instruction: "Pour to 300g total." },
+      { at: 210, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "kurasu-kyoto-v60",
+    name: "Kurasu Kyoto V60",
+    author: "Kurasu",
+    blurb:
+      "A cafe-standard three-pour recipe tuned for bright, aromatic light roasts.",
+    roast: "light",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 15,
+    waterGrams: 250,
+    waterTempC: 92,
+    c40Clicks: 24,
+    totalSeconds: 195,
+    steps: [
+      { instruction: "Rinse the filter and add 15g of coffee." },
+      { at: 0, instruction: "Pour 45g to bloom and swirl gently." },
+      { at: 40, instruction: "Pour to 150g total in slow circles." },
+      { at: 90, instruction: "Pour to 250g total." },
+      { at: 195, instruction: "Let it finish dripping and serve." },
+    ],
+  },
+  {
+    id: "hoffmann-two-cup-v60",
+    name: "Hoffmann Two-Cup V60",
+    author: "James Hoffmann",
+    blurb:
+      "The Ultimate technique scaled to two cups, with a larger bloom and two even pours.",
+    roast: "medium",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 36,
+    waterGrams: 600,
+    waterTempC: 95,
+    c40Clicks: 28,
+    totalSeconds: 240,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter and add 36g of coffee, then make a well.",
+      },
+      {
+        at: 0,
+        instruction: "Pour 72g to bloom, then swirl to wet all grounds.",
+      },
+      { at: 45, instruction: "Pour steadily up to 360g, finishing by 1:15." },
+      {
+        at: 75,
+        instruction: "Pour gently up to 600g total, finishing by 1:45.",
+      },
+      { at: 105, instruction: "Gently swirl the slurry to flatten the bed." },
+      { at: 240, instruction: "Let it draw down completely, then serve." },
+    ],
+  },
+  {
+    id: "wettpress-winner",
+    name: "Wettpress Winner",
+    author: "Paige Wallhausser",
+    blurb:
+      "A long inverted steep that draws bright, juicy fruit from a light-roast coffee.",
+    roast: "light",
+    grind: "medium",
+    orientation: "inverted",
+    method: "aeropress",
+    coffeeGrams: 21,
+    waterGrams: 220,
+    waterTempC: 88,
+    c40Clicks: 22,
+    totalSeconds: 135,
+    steps: [
+      { instruction: "Assemble the AeroPress inverted and rinse the filter." },
+      { instruction: "Add 21g of medium ground coffee." },
+      { at: 0, instruction: "Pour 220g of water at 88C and stir 10 times." },
+      { at: 60, instruction: "Cap with the rinsed filter." },
+      { at: 90, instruction: "Flip onto the cup and let it settle." },
+      { at: 100, instruction: "Press steadily over 30 seconds." },
+      { at: 135, instruction: "Stop before the hiss and serve." },
+    ],
+  },
+  {
+    id: "prismo-concentrate",
+    name: "Prismo Concentrate",
+    author: "Fellow style",
+    blurb:
+      "A short, pressure-valve style shot for a thick, espresso-like base.",
+    roast: "dark",
+    grind: "fine",
+    orientation: "standard",
+    method: "aeropress",
+    coffeeGrams: 20,
+    waterGrams: 80,
+    waterTempC: 90,
+    c40Clicks: 13,
+    totalSeconds: 75,
+    steps: [
+      { instruction: "Fit the metal filter cap and add 20g of fine coffee." },
+      { at: 0, instruction: "Pour 80g of water and stir 5 times." },
+      { at: 30, instruction: "Seat the plunger and let it steep." },
+      { at: 45, instruction: "Press firmly over 25 seconds." },
+      { at: 75, instruction: "Top with hot water or milk and serve." },
+    ],
+  },
 ];
 
 export function getRecipe(id: string): Recipe | undefined {
   return recipes.find((recipe) => recipe.id === id);
+}
+
+// Short "method · roast" descriptor shown under saved recipes so the brewer
+// and roast type are clear at a glance.
+export function recipeTypeLabel(recipe: Recipe): string {
+  return `${METHOD_LABELS[recipe.method]} · ${ROAST_LABELS[recipe.roast]} roast`;
 }
 
 export interface Category {

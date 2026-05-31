@@ -5,7 +5,7 @@ import { StyledButton } from "@/components/StyledButton";
 import { StyledText } from "@/components/StyledText";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useUserRecipes } from "@/contexts/UserRecipesContext";
-import { getRecipe } from "@/data/recipes";
+import { getRecipe, recipeTypeLabel } from "@/data/recipes";
 import { n } from "@/utils/scaling";
 
 export default function FavoritesScreen() {
@@ -26,9 +26,11 @@ export default function FavoritesScreen() {
         saved.map((recipe) => (
           <StyledButton
             key={recipe.id}
+            numberOfLines={2}
             onPress={() =>
               router.push({ pathname: "/recipe", params: { id: recipe.id } })
             }
+            subtitle={recipeTypeLabel(recipe)}
             text={recipe.name}
           />
         ))
