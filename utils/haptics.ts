@@ -14,10 +14,12 @@ export const triggerHaptic = () => {
   }
 };
 
-// A firmer cue for when the brew advances to a new step, so it's felt
-// without looking at the screen mid-pour.
+// A strong double pulse for when the brew advances to a new step, so it's
+// clearly felt without looking at the screen mid-pour.
 export const triggerStepHaptic = () => {
-  if (hapticsEnabled) {
-    impactAsync(ImpactFeedbackStyle.Medium);
+  if (!hapticsEnabled) {
+    return;
   }
+  impactAsync(ImpactFeedbackStyle.Heavy);
+  setTimeout(() => impactAsync(ImpactFeedbackStyle.Heavy), 110);
 };

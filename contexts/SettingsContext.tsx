@@ -2,6 +2,7 @@ import { createContext, type ReactNode, useContext, useEffect } from "react";
 import type { BrewMethod, TempUnit } from "@/data/recipes";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import { setHapticsEnabled as syncHapticsEnabled } from "@/utils/haptics";
+import { setStepSoundEnabled as syncStepSoundEnabled } from "@/utils/sound";
 
 interface SettingsContextType {
   defaultGrinder: string;
@@ -12,7 +13,9 @@ interface SettingsContextType {
   setDefaultMethod: (value: BrewMethod) => Promise<void>;
   setHapticsEnabled: (value: boolean) => Promise<void>;
   setKeepAwake: (value: boolean) => Promise<void>;
+  setStepSound: (value: boolean) => Promise<void>;
   setTempUnit: (value: TempUnit) => Promise<void>;
+  stepSound: boolean;
   tempUnit: TempUnit;
 }
 
@@ -29,7 +32,9 @@ const SettingsContext = createContext<SettingsContextType>({
   setDefaultMethod: throwOutsideProvider,
   setHapticsEnabled: throwOutsideProvider,
   setKeepAwake: throwOutsideProvider,
+  setStepSound: throwOutsideProvider,
   setTempUnit: throwOutsideProvider,
+  stepSound: false,
   tempUnit: "C",
 });
 
@@ -50,11 +55,17 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     "defaultGrinder",
     "c40"
   );
+  const [stepSound, setStepSound] = usePersistedState("stepSound", false);
 
   // Mirror the haptics setting into the plain util module the press handlers use.
   useEffect(() => {
     syncHapticsEnabled(hapticsEnabled);
   }, [hapticsEnabled]);
+
+  // Mirror the step-sound setting into the sound util.
+  useEffect(() => {
+    syncStepSoundEnabled(stepSound);
+  }, [stepSound]);
 
   return (
     <SettingsContext.Provider
@@ -67,7 +78,9 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
         setDefaultMethod,
         setHapticsEnabled,
         setKeepAwake,
+        setStepSound,
         setTempUnit,
+        stepSound,
         tempUnit,
       }}
     >

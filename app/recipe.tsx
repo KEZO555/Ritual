@@ -40,6 +40,7 @@ import { useBrewTimer } from "@/hooks/useBrewTimer";
 import { useScrollIndicator } from "@/hooks/useScrollIndicator";
 import { triggerStepHaptic } from "@/utils/haptics";
 import { n } from "@/utils/scaling";
+import { playStepSound } from "@/utils/sound";
 
 function Spec({
   label,
@@ -139,6 +140,7 @@ export default function RecipeScreen() {
   useEffect(() => {
     if (running && activeIndex >= 0 && activeIndex !== buzzedIndex.current) {
       triggerStepHaptic();
+      playStepSound();
     }
     buzzedIndex.current = activeIndex;
   }, [running, activeIndex]);

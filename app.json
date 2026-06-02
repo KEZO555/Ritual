@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ritual",
     "slug": "ritual",
-    "version": "1.5.2",
+    "version": "1.6.0",
     "orientation": "portrait",
     "scheme": "ritual",
     "icon": "./assets/images/icon.png",
@@ -19,7 +19,8 @@
         }
       ],
       "./plugins/withAndroidConfigChanges",
-      "./plugins/withAndroidTheme"
+      "./plugins/withAndroidTheme",
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true
