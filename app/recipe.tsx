@@ -6,6 +6,7 @@ import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
   type ScrollView,
+  Share,
   StyleSheet,
   useWindowDimensions,
   View,
@@ -20,6 +21,7 @@ import { StyledText } from "@/components/StyledText";
 import { SwipeBackContainer } from "@/components/SwipeBackContainer";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useInvertColors } from "@/contexts/InvertColorsContext";
+import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useUserRecipes } from "@/contexts/UserRecipesContext";
 import {
@@ -105,7 +107,15 @@ export default function RecipeScreen() {
 
   const { invertColors } = useInvertColors();
   const { defaultGrinder, keepAwake, tempUnit } = useSettings();
+  const { addRecent } = useRecentlyViewed();
   const grinder = getGrinder(defaultGrinder);
+
+  // Record this recipe as recently viewed.
+  useEffect(() => {
+    if (id) {
+      addRecent(id);
+    }
+  }, [id, addRecent]);
   const { width } = useWindowDimensions();
   const { elapsed, running, activeIndex, toggle, reset, seek, total } =
     useBrewTimer(steps, recipe?.totalSeconds ?? 0);
@@ -212,6 +222,31 @@ export default function RecipeScreen() {
     setCoffeeOverride(null);
     setRoastOverride(null);
     reset();
+  };
+
+  const handleShare = () => {
+    if (!recipe) {
+      return;
+    }
+    const lines = [
+      recipe.name,
+      `by ${recipe.author}`,
+      "",
+      `${recipe.coffeeGrams}g coffee : ${recipe.waterGrams}g water${
+        ratio === null ? "" : ` (1:${ratio})`
+      }`,
+      `${toDisplayTemp(recipe.waterTempC, tempUnit)}${tempUnit} · ${
+        METHOD_LABELS[recipe.method]
+      } · ${GRIND_LABELS[recipe.grind]} grind`,
+      "",
+      ...displaySteps.map(
+        (step) =>
+          `${step.at === undefined ? "Prep" : formatDuration(step.at)} — ${
+            step.instruction
+          }`
+      ),
+    ];
+    Share.share({ message: lines.join("\n") });
   };
 
   return (
@@ -375,6 +410,9 @@ export default function RecipeScreen() {
               }}
               steps={displaySteps}
             />
+            <HapticPressable onPress={handleShare} style={styles.row}>
+              <StyledText style={styles.shareLink}>Share recipe</StyledText>
+            </HapticPressable>
             <View style={styles.bottomSpacer} />
           </Animated.ScrollView>
           {scrollIndicatorHeight > 0 && (
@@ -436,6 +474,11 @@ const styles = StyleSheet.create({
     fontSize: n(18),
     lineHeight: n(26),
     opacity: 0.75,
+  },
+  shareLink: {
+    fontSize: n(20),
+    opacity: 0.7,
+    textDecorationLine: "underline",
   },
   adjust: {
     width: "100%",

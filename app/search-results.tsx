@@ -3,7 +3,7 @@ import ContentContainer from "@/components/ContentContainer";
 import { StyledButton } from "@/components/StyledButton";
 import { StyledText } from "@/components/StyledText";
 import { useFilters } from "@/contexts/FiltersContext";
-import { filterRecipes } from "@/data/recipes";
+import { filterRecipes, recipeMetaLabel } from "@/data/recipes";
 import { n } from "@/utils/scaling";
 
 export default function SearchResultsScreen() {
@@ -18,9 +18,11 @@ export default function SearchResultsScreen() {
         results.map((recipe) => (
           <StyledButton
             key={recipe.id}
+            numberOfLines={2}
             onPress={() =>
               router.push({ pathname: "/recipe", params: { id: recipe.id } })
             }
+            subtitle={recipeMetaLabel(recipe)}
             text={recipe.name}
           />
         ))

@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import ContentContainer from "@/components/ContentContainer";
 import { SelectorButton } from "@/components/SelectorButton";
 import { StyledButton } from "@/components/StyledButton";
+import { TextInput } from "@/components/TextInput";
 import { useFilters } from "@/contexts/FiltersContext";
 import {
   BREW_TIME_LABELS,
@@ -14,14 +15,15 @@ import {
 const ANY = "Any";
 
 export default function SearchScreen() {
-  const { filters, resetFilters } = useFilters();
+  const { filters, setFilter, resetFilters } = useFilters();
 
   const hasFilters =
     filters.roast !== null ||
     filters.grind !== null ||
     filters.method !== null ||
     filters.orientation !== null ||
-    filters.brewTime !== null;
+    filters.brewTime !== null ||
+    filters.query.trim() !== "";
 
   return (
     <ContentContainer
@@ -32,6 +34,12 @@ export default function SearchScreen() {
         onPress: () => router.push("/search-results"),
       }}
     >
+      <TextInput
+        onChangeText={(text) => setFilter("query", text)}
+        onSubmit={() => router.push("/search-results")}
+        placeholder="Search by name"
+        value={filters.query}
+      />
       <SelectorButton
         href="/filters/method"
         label="Method"

@@ -1551,6 +1551,18 @@ export function recipeTypeLabel(recipe: Recipe): string {
   return `${METHOD_LABELS[recipe.method]} · ${ROAST_LABELS[recipe.roast]} roast`;
 }
 
+// Method · ratio · time descriptor shown under recipes in browse lists.
+export function recipeMetaLabel(recipe: Recipe): string {
+  const parts = [METHOD_LABELS[recipe.method]];
+  if (recipe.coffeeGrams > 0) {
+    const ratio =
+      Math.round((recipe.waterGrams / recipe.coffeeGrams) * 10) / 10;
+    parts.push(`1:${ratio}`);
+  }
+  parts.push(formatDuration(recipe.totalSeconds));
+  return parts.join(" · ");
+}
+
 // Bounds for an adjusted coffee dose, in grams.
 export const MIN_COFFEE_GRAMS = 5;
 export const MAX_COFFEE_GRAMS = 60;
@@ -1767,11 +1779,16 @@ export interface Filters {
   grind: Grind | null;
   method: BrewMethod | null;
   orientation: Orientation | null;
+  query: string;
   roast: Roast | null;
 }
 
 export function filterRecipes(filters: Filters): Recipe[] {
+  const query = filters.query.trim().toLowerCase();
   return recipes.filter((recipe) => {
+    if (query && !recipe.name.toLowerCase().includes(query)) {
+      return false;
+    }
     if (filters.roast && recipe.roast !== filters.roast) {
       return false;
     }

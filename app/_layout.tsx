@@ -7,6 +7,7 @@ import {
   InvertColorsProvider,
   useInvertColors,
 } from "@/contexts/InvertColorsContext";
+import { RecentlyViewedProvider } from "@/contexts/RecentlyViewedContext";
 import { SettingsProvider } from "@/contexts/SettingsContext";
 import { UserRecipesProvider } from "@/contexts/UserRecipesContext";
 
@@ -33,10 +34,12 @@ export default function App() {
         <SettingsProvider>
           <FavoritesProvider>
             <UserRecipesProvider>
-              <FiltersProvider>
-                <StatusBar hidden />
-                <RootLayout />
-              </FiltersProvider>
+              <RecentlyViewedProvider>
+                <FiltersProvider>
+                  <StatusBar hidden />
+                  <RootLayout />
+                </FiltersProvider>
+              </RecentlyViewedProvider>
             </UserRecipesProvider>
           </FavoritesProvider>
         </SettingsProvider>

@@ -7,6 +7,7 @@ const EMPTY_FILTERS: Filters = {
   method: null,
   orientation: null,
   brewTime: null,
+  query: "",
 };
 
 interface FiltersContextType {

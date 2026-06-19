@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import ContentContainer from "@/components/ContentContainer";
 import { StyledButton } from "@/components/StyledButton";
 import { StyledText } from "@/components/StyledText";
-import { categoryRecipes, getCategory } from "@/data/recipes";
+import { categoryRecipes, getCategory, recipeMetaLabel } from "@/data/recipes";
 import { n } from "@/utils/scaling";
 
 export default function CategoryScreen() {
@@ -26,9 +26,11 @@ export default function CategoryScreen() {
       {results.map((recipe) => (
         <StyledButton
           key={recipe.id}
+          numberOfLines={2}
           onPress={() =>
             router.push({ pathname: "/recipe", params: { id: recipe.id } })
           }
+          subtitle={recipeMetaLabel(recipe)}
           text={recipe.name}
         />
       ))}
