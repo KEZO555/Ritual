@@ -40,9 +40,11 @@ import {
 } from "@/data/recipes";
 import { useBrewTimer } from "@/hooks/useBrewTimer";
 import { useScrollIndicator } from "@/hooks/useScrollIndicator";
-import { triggerStepHaptic } from "@/utils/haptics";
+import { triggerHaptic, triggerStepHaptic } from "@/utils/haptics";
 import { n } from "@/utils/scaling";
 import { playStepSound } from "@/utils/sound";
+
+const PRECUE_SECONDS = 3;
 
 function Spec({
   label,
@@ -131,6 +133,15 @@ export default function RecipeScreen() {
     [steps, tempUnit]
   );
 
+  // Seconds until the next timed step (for the countdown + pre-cue).
+  const nextStepAt = useMemo(() => {
+    const upcoming = steps
+      .map((step) => step.at)
+      .filter((at) => at !== undefined && at > elapsed) as number[];
+    return upcoming.length > 0 ? Math.min(...upcoming) : null;
+  }, [steps, elapsed]);
+  const nextIn = nextStepAt === null ? null : nextStepAt - elapsed;
+
   const {
     handleScroll,
     scrollIndicatorHeight,
@@ -144,6 +155,7 @@ export default function RecipeScreen() {
   const stepRefs = useRef<(View | null)[]>([]);
   const scrollOffset = useRef(0);
   const buzzedIndex = useRef(-1);
+  const precuedAt = useRef(-1);
 
   // Buzz when the running brew advances to a new step so it's noticeable
   // without watching the screen. Taps/seeks already give their own feedback.
@@ -154,6 +166,22 @@ export default function RecipeScreen() {
     }
     buzzedIndex.current = activeIndex;
   }, [running, activeIndex]);
+
+  // Give a light heads-up a few seconds before each step.
+  useEffect(() => {
+    if (!running) {
+      precuedAt.current = -1;
+      return;
+    }
+    if (
+      nextStepAt !== null &&
+      nextStepAt - elapsed <= PRECUE_SECONDS &&
+      precuedAt.current !== nextStepAt
+    ) {
+      triggerHaptic();
+      precuedAt.current = nextStepAt;
+    }
+  }, [running, elapsed, nextStepAt]);
 
   // Keep the screen awake while the timer counts so the brew stays visible,
   // unless the user has turned the setting off.
@@ -266,6 +294,7 @@ export default function RecipeScreen() {
         />
         <BrewTimer
           elapsed={elapsed}
+          nextIn={running ? nextIn : null}
           onReset={reset}
           onToggle={toggle}
           running={running}

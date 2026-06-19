@@ -22,6 +22,7 @@ function ElapsedText({ seconds }: { seconds: number }) {
 
 interface BrewTimerProps {
   elapsed: number;
+  nextIn?: number | null;
   onMeasureHeight?: (height: number) => void;
   onReset: () => void;
   onToggle: () => void;
@@ -33,6 +34,7 @@ export function BrewTimer({
   elapsed,
   running,
   total,
+  nextIn,
   onToggle,
   onReset,
   onMeasureHeight,
@@ -68,6 +70,13 @@ export function BrewTimer({
           </HapticPressable>
         </View>
       </View>
+      {nextIn === null || nextIn === undefined ? null : (
+        <View style={styles.nextRow}>
+          <StyledText style={styles.nextText}>
+            {`Next step in ${formatDuration(nextIn)}`}
+          </StyledText>
+        </View>
+      )}
       <View style={styles.progressTrack}>
         <View style={[styles.progressBase, { backgroundColor: fg }]} />
         <View
@@ -109,6 +118,16 @@ const styles = StyleSheet.create({
   },
   total: {
     fontSize: n(18),
+    opacity: 0.5,
+  },
+  nextRow: {
+    width: "100%",
+    paddingLeft: n(37),
+    paddingRight: n(46),
+    paddingBottom: n(10),
+  },
+  nextText: {
+    fontSize: n(15),
     opacity: 0.5,
   },
   controls: {
