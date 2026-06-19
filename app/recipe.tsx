@@ -297,6 +297,9 @@ export default function RecipeScreen() {
         <Header
           headerTitle={recipe.name}
           rightAction={{
+            accessibilityLabel: isFavorite(recipe.id)
+              ? "Remove from favorites"
+              : "Save to favorites",
             icon: isFavorite(recipe.id) ? "favorite" : "favorite-border",
             onPress: () => toggleFavorite(recipe.id),
           }}

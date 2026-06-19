@@ -7,6 +7,7 @@ import { HapticPressable } from "./HapticPressable";
 import { StyledText } from "./StyledText";
 
 interface RightAction {
+  accessibilityLabel?: string;
   icon: keyof typeof MaterialIcons.glyphMap;
   onPress: () => void;
   show?: boolean;
@@ -42,7 +43,11 @@ export function Header({
       {hideBackButton ? (
         <View style={styles.button} />
       ) : (
-        <HapticPressable onPress={handleBack}>
+        <HapticPressable
+          accessibilityLabel="Go back"
+          accessibilityRole="button"
+          onPress={handleBack}
+        >
           <View style={styles.button}>
             <MaterialIcons
               color={iconColor}
@@ -56,7 +61,11 @@ export function Header({
         {headerTitle}
       </StyledText>
       {rightAction?.show !== false && rightAction?.icon ? (
-        <HapticPressable onPress={rightAction.onPress}>
+        <HapticPressable
+          accessibilityLabel={rightAction.accessibilityLabel ?? "Action"}
+          accessibilityRole="button"
+          onPress={rightAction.onPress}
+        >
           <View style={styles.button}>
             <MaterialIcons
               color={iconColor}

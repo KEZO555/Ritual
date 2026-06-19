@@ -9,6 +9,7 @@ import { useScrollIndicator } from "@/hooks/useScrollIndicator";
 import { n } from "@/utils/scaling";
 
 interface RightAction {
+  accessibilityLabel?: string;
   icon: keyof typeof MaterialIcons.glyphMap;
   onPress: () => void;
   show?: boolean;

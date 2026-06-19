@@ -21,6 +21,7 @@ export default function FavoritesScreen() {
       headerTitle="Favorites"
       hideBackButton
       rightAction={{
+        accessibilityLabel: "Brew history",
         icon: "history",
         onPress: () => router.push("/history" as Href),
       }}

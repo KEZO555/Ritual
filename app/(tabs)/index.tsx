@@ -42,6 +42,7 @@ export default function RecipesScreen() {
       headerTitle="Recipes"
       hideBackButton
       rightAction={{
+        accessibilityLabel: "Create recipe",
         icon: "add",
         onPress: () => router.push("/create-recipe"),
       }}

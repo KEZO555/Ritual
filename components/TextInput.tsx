@@ -59,7 +59,12 @@ export function TextInput({
         value={value}
       />
       {value.length > 0 && (
-        <HapticPressable onPress={handleClear} style={styles.clearButton}>
+        <HapticPressable
+          accessibilityLabel="Clear text"
+          accessibilityRole="button"
+          onPress={handleClear}
+          style={styles.clearButton}
+        >
           <MaterialIcons color={textColor} name="close" size={n(24)} />
         </HapticPressable>
       )}

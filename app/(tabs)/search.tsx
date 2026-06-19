@@ -30,6 +30,7 @@ export default function SearchScreen() {
       headerTitle="Search"
       hideBackButton
       rightAction={{
+        accessibilityLabel: "Show results",
         icon: "search",
         onPress: () => router.push("/search-results"),
       }}

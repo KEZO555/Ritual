@@ -40,6 +40,8 @@ export function Navbar({
     >
       {tabsConfig?.map((tab) => (
         <HapticPressable
+          accessibilityLabel={tab.name}
+          accessibilityRole="button"
           key={tab.screenName}
           onPress={() => navigation.navigate(tab.screenName)}
         >
