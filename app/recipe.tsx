@@ -1,5 +1,4 @@
-import { activateKeepAwakeAsync, deactivateKeepAwake } from "expo-keep-awake";
-import { router, useLocalSearchParams } from "expo-router";
+import { type Href, router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Animated,
@@ -19,6 +18,7 @@ import { HapticPressable } from "@/components/HapticPressable";
 import { Header } from "@/components/Header";
 import { StyledText } from "@/components/StyledText";
 import { SwipeBackContainer } from "@/components/SwipeBackContainer";
+import { type BrewEntry, useBrewHistory } from "@/contexts/BrewHistoryContext";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useInvertColors } from "@/contexts/InvertColorsContext";
 import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
@@ -33,18 +33,72 @@ import {
   grinderClicks,
   METHOD_LABELS,
   ORIENTATION_LABELS,
+  type Recipe,
   ROAST_LABELS,
   type Roast,
+  type Step,
   scaleRecipe,
+  type TempUnit,
   toDisplayTemp,
 } from "@/data/recipes";
+import { useBrewCues } from "@/hooks/useBrewCues";
 import { useBrewTimer } from "@/hooks/useBrewTimer";
 import { useScrollIndicator } from "@/hooks/useScrollIndicator";
-import { triggerHaptic, triggerStepHaptic } from "@/utils/haptics";
 import { n } from "@/utils/scaling";
-import { playStepSound } from "@/utils/sound";
 
-const PRECUE_SECONDS = 3;
+function buildShareText(
+  recipe: Recipe,
+  ratio: number | null,
+  tempUnit: TempUnit,
+  steps: Step[]
+): string {
+  const ratioText = ratio === null ? "" : ` (1:${ratio})`;
+  const stepLines = steps.map((step) => {
+    const time = step.at === undefined ? "Prep" : formatDuration(step.at);
+    return `${time} — ${step.instruction}`;
+  });
+  return [
+    recipe.name,
+    `by ${recipe.author}`,
+    "",
+    `${recipe.coffeeGrams}g coffee : ${recipe.waterGrams}g water${ratioText}`,
+    `${toDisplayTemp(recipe.waterTempC, tempUnit)}${tempUnit} · ${METHOD_LABELS[recipe.method]} · ${GRIND_LABELS[recipe.grind]} grind`,
+    "",
+    ...stepLines,
+  ].join("\n");
+}
+
+function scaledRecipe(
+  original: Recipe | undefined,
+  coffee: number | null,
+  roast: Roast | null
+): Recipe | undefined {
+  if (!original) {
+    return;
+  }
+  return scaleRecipe(
+    original,
+    coffee ?? original.coffeeGrams,
+    roast ?? original.roast
+  );
+}
+
+function nextTimedStep(steps: Step[], elapsed: number): number | null {
+  const upcoming = steps
+    .map((step) => step.at)
+    .filter((at): at is number => at !== undefined && at > elapsed);
+  return upcoming.length > 0 ? Math.min(...upcoming) : null;
+}
+
+function brewSummaryText(brews: BrewEntry[]): string | null {
+  const last = brews[0];
+  if (!last) {
+    return null;
+  }
+  const filled = "★".repeat(last.rating);
+  const empty = "☆".repeat(5 - last.rating);
+  return `Brewed ${brews.length}× · last ${filled}${empty}`;
+}
 
 function Spec({
   label,
@@ -67,12 +121,13 @@ function Spec({
 }
 
 const ROASTS: Roast[] = ["light", "medium", "dark"];
-const KEEP_AWAKE_TAG = "brew-timer";
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: screen root orchestrating the timer, scaler, history, share and no-scale guide
 export default function RecipeScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { getUserRecipe } = useUserRecipes();
+  const { getUserRecipe, addRecipe } = useUserRecipes();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { entries } = useBrewHistory();
   const original = useMemo(
     () => (id ? (getRecipe(id) ?? getUserRecipe(id)) : undefined),
     [id, getUserRecipe]
@@ -90,16 +145,10 @@ export default function RecipeScreen() {
     setRoastOverride(null);
   }
 
-  const recipe = useMemo(() => {
-    if (!original) {
-      return;
-    }
-    return scaleRecipe(
-      original,
-      coffeeOverride ?? original.coffeeGrams,
-      roastOverride ?? original.roast
-    );
-  }, [original, coffeeOverride, roastOverride]);
+  const recipe = useMemo(
+    () => scaledRecipe(original, coffeeOverride, roastOverride),
+    [original, coffeeOverride, roastOverride]
+  );
   const steps = recipe?.steps ?? [];
   const modified =
     !!original &&
@@ -134,12 +183,10 @@ export default function RecipeScreen() {
   );
 
   // Seconds until the next timed step (for the countdown + pre-cue).
-  const nextStepAt = useMemo(() => {
-    const upcoming = steps
-      .map((step) => step.at)
-      .filter((at) => at !== undefined && at > elapsed) as number[];
-    return upcoming.length > 0 ? Math.min(...upcoming) : null;
-  }, [steps, elapsed]);
+  const nextStepAt = useMemo(
+    () => nextTimedStep(steps, elapsed),
+    [steps, elapsed]
+  );
   const nextIn = nextStepAt === null ? null : nextStepAt - elapsed;
 
   const {
@@ -154,46 +201,8 @@ export default function RecipeScreen() {
   const scrollWrapperRef = useRef<View>(null);
   const stepRefs = useRef<(View | null)[]>([]);
   const scrollOffset = useRef(0);
-  const buzzedIndex = useRef(-1);
-  const precuedAt = useRef(-1);
 
-  // Buzz when the running brew advances to a new step so it's noticeable
-  // without watching the screen. Taps/seeks already give their own feedback.
-  useEffect(() => {
-    if (running && activeIndex >= 0 && activeIndex !== buzzedIndex.current) {
-      triggerStepHaptic();
-      playStepSound();
-    }
-    buzzedIndex.current = activeIndex;
-  }, [running, activeIndex]);
-
-  // Give a light heads-up a few seconds before each step.
-  useEffect(() => {
-    if (!running) {
-      precuedAt.current = -1;
-      return;
-    }
-    if (
-      nextStepAt !== null &&
-      nextStepAt - elapsed <= PRECUE_SECONDS &&
-      precuedAt.current !== nextStepAt
-    ) {
-      triggerHaptic();
-      precuedAt.current = nextStepAt;
-    }
-  }, [running, elapsed, nextStepAt]);
-
-  // Keep the screen awake while the timer counts so the brew stays visible,
-  // unless the user has turned the setting off.
-  useEffect(() => {
-    if (!(running && keepAwake)) {
-      return;
-    }
-    activateKeepAwakeAsync(KEEP_AWAKE_TAG);
-    return () => {
-      deactivateKeepAwake(KEEP_AWAKE_TAG);
-    };
-  }, [running, keepAwake]);
+  useBrewCues({ running, activeIndex, elapsed, nextStepAt, keepAwake });
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollOffset.current = event.nativeEvent.contentOffset.y;
@@ -236,6 +245,16 @@ export default function RecipeScreen() {
       : null;
   const accent = invertColors ? "black" : "white";
 
+  const brewSummary = brewSummaryText(
+    entries.filter((entry) => entry.recipeId === recipe.id)
+  );
+  const ratioValue = ratio === null ? "-" : `1:${ratio}`;
+  const clicksValue =
+    grinder.id === "c40"
+      ? `${recipe.c40Clicks}`
+      : `~${grinderClicks(recipe.c40Clicks, grinder)}`;
+  const timerNextIn = running ? nextIn : null;
+
   const handleBack = () => {
     if (router.canGoBack()) {
       router.back();
@@ -252,29 +271,19 @@ export default function RecipeScreen() {
     reset();
   };
 
-  const handleShare = () => {
+  const handleSaveAsMine = () => {
     if (!recipe) {
       return;
     }
-    const lines = [
-      recipe.name,
-      `by ${recipe.author}`,
-      "",
-      `${recipe.coffeeGrams}g coffee : ${recipe.waterGrams}g water${
-        ratio === null ? "" : ` (1:${ratio})`
-      }`,
-      `${toDisplayTemp(recipe.waterTempC, tempUnit)}${tempUnit} · ${
-        METHOD_LABELS[recipe.method]
-      } · ${GRIND_LABELS[recipe.grind]} grind`,
-      "",
-      ...displaySteps.map(
-        (step) =>
-          `${step.at === undefined ? "Prep" : formatDuration(step.at)} — ${
-            step.instruction
-          }`
-      ),
-    ];
-    Share.share({ message: lines.join("\n") });
+    const newId = `mix-${Date.now()}`;
+    addRecipe({ ...recipe, id: newId, name: `${recipe.name} (my mix)` });
+    router.replace({ pathname: "/recipe", params: { id: newId } });
+  };
+
+  const handleShare = () => {
+    Share.share({
+      message: buildShareText(recipe, ratio, tempUnit, displaySteps),
+    });
   };
 
   return (
@@ -294,7 +303,7 @@ export default function RecipeScreen() {
         />
         <BrewTimer
           elapsed={elapsed}
-          nextIn={running ? nextIn : null}
+          nextIn={timerNextIn}
           onReset={reset}
           onToggle={toggle}
           running={running}
@@ -320,6 +329,11 @@ export default function RecipeScreen() {
             <StyledText style={[styles.row, styles.blurb]}>
               {recipe.blurb}
             </StyledText>
+            {brewSummary ? (
+              <StyledText style={[styles.row, styles.brewSummary]}>
+                {brewSummary}
+              </StyledText>
+            ) : null}
             <View style={[styles.row, styles.adjust]}>
               <View style={styles.adjustRow}>
                 <StyledText style={styles.adjustLabel}>Coffee</StyledText>
@@ -365,16 +379,23 @@ export default function RecipeScreen() {
                 </View>
               </View>
               {modified ? (
-                <HapticPressable onPress={resetToOriginal}>
-                  <StyledText style={styles.resetLink}>
-                    Reset to original
-                  </StyledText>
-                </HapticPressable>
+                <View style={styles.adjustActions}>
+                  <HapticPressable onPress={resetToOriginal}>
+                    <StyledText style={styles.resetLink}>
+                      Reset to original
+                    </StyledText>
+                  </HapticPressable>
+                  <HapticPressable onPress={handleSaveAsMine}>
+                    <StyledText style={styles.resetLink}>
+                      Save as my recipe
+                    </StyledText>
+                  </HapticPressable>
+                </View>
               ) : null}
             </View>
             <View style={[styles.row, styles.specs]}>
               <Spec label="Water" value={`${recipe.waterGrams}g`} />
-              <Spec label="Ratio" value={ratio === null ? "-" : `1:${ratio}`} />
+              <Spec label="Ratio" value={ratioValue} />
               <Spec
                 label="Temp"
                 unit={tempUnit}
@@ -389,14 +410,7 @@ export default function RecipeScreen() {
                   value={ORIENTATION_LABELS[recipe.orientation]}
                 />
               ) : null}
-              <Spec
-                label={grinder.clicksLabel}
-                value={
-                  grinder.id === "c40"
-                    ? `${recipe.c40Clicks}`
-                    : `~${grinderClicks(recipe.c40Clicks, grinder)}`
-                }
-              />
+              <Spec label={grinder.clicksLabel} value={clicksValue} />
             </View>
             <HapticPressable
               onPress={() => setShowNoScale((value) => !value)}
@@ -439,9 +453,16 @@ export default function RecipeScreen() {
               }}
               steps={displaySteps}
             />
-            <HapticPressable onPress={handleShare} style={styles.row}>
-              <StyledText style={styles.shareLink}>Share recipe</StyledText>
-            </HapticPressable>
+            <View style={[styles.row, styles.bottomActions]}>
+              <HapticPressable
+                onPress={() => router.push(`/log-brew?id=${id}` as Href)}
+              >
+                <StyledText style={styles.shareLink}>Log this brew</StyledText>
+              </HapticPressable>
+              <HapticPressable onPress={handleShare}>
+                <StyledText style={styles.shareLink}>Share recipe</StyledText>
+              </HapticPressable>
+            </View>
             <View style={styles.bottomSpacer} />
           </Animated.ScrollView>
           {scrollIndicatorHeight > 0 && (
@@ -509,6 +530,15 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     textDecorationLine: "underline",
   },
+  bottomActions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: n(24),
+  },
+  brewSummary: {
+    fontSize: n(16),
+    opacity: 0.6,
+  },
   adjust: {
     width: "100%",
     gap: n(18),
@@ -558,6 +588,11 @@ const styles = StyleSheet.create({
   },
   roastIdle: {
     opacity: 0.4,
+  },
+  adjustActions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: n(24),
   },
   resetLink: {
     fontSize: n(18),

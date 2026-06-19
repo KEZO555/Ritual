@@ -1563,6 +1563,45 @@ export function recipeMetaLabel(recipe: Recipe): string {
   return parts.join(" · ");
 }
 
+export type SortKey = "default" | "recent" | "quick" | "strong";
+
+export const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: "default", label: "Default" },
+  { key: "recent", label: "Recently used" },
+  { key: "quick", label: "Quickest" },
+  { key: "strong", label: "Strongest" },
+];
+
+function brewRatio(recipe: Recipe): number {
+  return recipe.coffeeGrams > 0
+    ? recipe.waterGrams / recipe.coffeeGrams
+    : Number.POSITIVE_INFINITY;
+}
+
+// Sort recipes by the chosen key. `recentIds` is the recently-viewed order
+// (most recent first), used by the "recent" sort.
+export function sortRecipes(
+  list: Recipe[],
+  key: SortKey,
+  recentIds: string[] = []
+): Recipe[] {
+  if (key === "default") {
+    return list;
+  }
+  const copy = [...list];
+  if (key === "quick") {
+    return copy.sort((a, b) => a.totalSeconds - b.totalSeconds);
+  }
+  if (key === "strong") {
+    return copy.sort((a, b) => brewRatio(a) - brewRatio(b));
+  }
+  const rank = (id: string) => {
+    const index = recentIds.indexOf(id);
+    return index === -1 ? Number.MAX_SAFE_INTEGER : index;
+  };
+  return copy.sort((a, b) => rank(a.id) - rank(b.id));
+}
+
 // Bounds for an adjusted coffee dose, in grams.
 export const MIN_COFFEE_GRAMS = 5;
 export const MAX_COFFEE_GRAMS = 60;

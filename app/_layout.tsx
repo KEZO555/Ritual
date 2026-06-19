@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BrewHistoryProvider } from "@/contexts/BrewHistoryContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import { FiltersProvider } from "@/contexts/FiltersContext";
 import {
@@ -35,10 +36,12 @@ export default function App() {
           <FavoritesProvider>
             <UserRecipesProvider>
               <RecentlyViewedProvider>
-                <FiltersProvider>
-                  <StatusBar hidden />
-                  <RootLayout />
-                </FiltersProvider>
+                <BrewHistoryProvider>
+                  <FiltersProvider>
+                    <StatusBar hidden />
+                    <RootLayout />
+                  </FiltersProvider>
+                </BrewHistoryProvider>
               </RecentlyViewedProvider>
             </UserRecipesProvider>
           </FavoritesProvider>

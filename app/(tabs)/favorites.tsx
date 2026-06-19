@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { type Href, router } from "expo-router";
 import { StyleSheet } from "react-native";
 import ContentContainer from "@/components/ContentContainer";
 import { StyledButton } from "@/components/StyledButton";
@@ -17,7 +17,14 @@ export default function FavoritesScreen() {
     .filter((recipe) => recipe !== undefined);
 
   return (
-    <ContentContainer headerTitle="Favorites" hideBackButton>
+    <ContentContainer
+      headerTitle="Favorites"
+      hideBackButton
+      rightAction={{
+        icon: "history",
+        onPress: () => router.push("/history" as Href),
+      }}
+    >
       {saved.length === 0 ? (
         <StyledText style={styles.empty}>
           No saved recipes yet. Tap the heart on any recipe to save it here.
