@@ -157,7 +157,7 @@ export default function RecipeScreen() {
       recipe.roast !== original.roast);
 
   const { invertColors } = useInvertColors();
-  const { defaultGrinder, keepAwake, tempUnit } = useSettings();
+  const { defaultGrinder, grinderOffset, keepAwake, tempUnit } = useSettings();
   const { addRecent } = useRecentlyViewed();
   const grinder = getGrinder(defaultGrinder);
 
@@ -249,10 +249,13 @@ export default function RecipeScreen() {
     entries.filter((entry) => entry.recipeId === recipe.id)
   );
   const ratioValue = ratio === null ? "-" : `1:${ratio}`;
-  const clicksValue =
+  const rawClicks =
     grinder.id === "c40"
-      ? `${recipe.c40Clicks}`
-      : `~${grinderClicks(recipe.c40Clicks, grinder)}`;
+      ? recipe.c40Clicks
+      : grinderClicks(recipe.c40Clicks, grinder);
+  const adjustedClicks = Math.max(1, rawClicks + grinderOffset);
+  const clicksValue =
+    grinder.id === "c40" ? `${adjustedClicks}` : `~${adjustedClicks}`;
   const timerNextIn = running ? nextIn : null;
 
   const handleBack = () => {
@@ -333,9 +336,22 @@ export default function RecipeScreen() {
               {recipe.blurb}
             </StyledText>
             {brewSummary ? (
-              <StyledText style={[styles.row, styles.brewSummary]}>
-                {brewSummary}
-              </StyledText>
+              <View style={[styles.row, styles.brewSummaryRow]}>
+                <HapticPressable
+                  onPress={() =>
+                    router.push(`/history?tab=log&recipeId=${id}` as Href)
+                  }
+                >
+                  <StyledText style={styles.brewSummary}>
+                    {brewSummary}
+                  </StyledText>
+                </HapticPressable>
+                {!running && elapsed === 0 ? (
+                  <HapticPressable onPress={toggle}>
+                    <StyledText style={styles.quickStart}>Brew →</StyledText>
+                  </HapticPressable>
+                ) : null}
+              </View>
             ) : null}
             <View style={[styles.row, styles.adjust]}>
               <View style={styles.adjustRow}>
@@ -445,6 +461,12 @@ export default function RecipeScreen() {
                 </StyledText>
               </>
             ) : null}
+            {recipe.waterTempC < 96 && !running && elapsed === 0 ? (
+              <StyledText style={[styles.row, styles.kettleHint]}>
+                Let kettle cool to {toDisplayTemp(recipe.waterTempC, tempUnit)}
+                {tempUnit} before starting.
+              </StyledText>
+            ) : null}
             <StyledText style={[styles.row, styles.sectionTitle]}>
               Steps
             </StyledText>
@@ -538,9 +560,24 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: n(24),
   },
+  brewSummaryRow: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: n(20),
+  },
   brewSummary: {
     fontSize: n(16),
     opacity: 0.6,
+  },
+  quickStart: {
+    fontSize: n(16),
+    opacity: 0.6,
+    textDecorationLine: "underline",
+  },
+  kettleHint: {
+    fontSize: n(18),
+    opacity: 0.55,
+    lineHeight: n(26),
   },
   adjust: {
     width: "100%",

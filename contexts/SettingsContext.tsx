@@ -7,10 +7,12 @@ import { setStepSoundEnabled as syncStepSoundEnabled } from "@/utils/sound";
 interface SettingsContextType {
   defaultGrinder: string;
   defaultMethod: BrewMethod;
+  grinderOffset: number;
   hapticsEnabled: boolean;
   keepAwake: boolean;
   setDefaultGrinder: (value: string) => Promise<void>;
   setDefaultMethod: (value: BrewMethod) => Promise<void>;
+  setGrinderOffset: (value: number) => Promise<void>;
   setHapticsEnabled: (value: boolean) => Promise<void>;
   setKeepAwake: (value: boolean) => Promise<void>;
   setStepSound: (value: boolean) => Promise<void>;
@@ -26,10 +28,12 @@ const throwOutsideProvider = () => {
 const SettingsContext = createContext<SettingsContextType>({
   defaultGrinder: "c40",
   defaultMethod: "aeropress",
+  grinderOffset: 0,
   hapticsEnabled: true,
   keepAwake: true,
   setDefaultGrinder: throwOutsideProvider,
   setDefaultMethod: throwOutsideProvider,
+  setGrinderOffset: throwOutsideProvider,
   setHapticsEnabled: throwOutsideProvider,
   setKeepAwake: throwOutsideProvider,
   setStepSound: throwOutsideProvider,
@@ -55,6 +59,10 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     "defaultGrinder",
     "c40"
   );
+  const [grinderOffset, setGrinderOffset] = usePersistedState(
+    "grinderOffset",
+    0
+  );
   const [stepSound, setStepSound] = usePersistedState("stepSound", false);
 
   // Mirror the haptics setting into the plain util module the press handlers use.
@@ -72,10 +80,12 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
       value={{
         defaultGrinder,
         defaultMethod,
+        grinderOffset,
         hapticsEnabled,
         keepAwake,
         setDefaultGrinder,
         setDefaultMethod,
+        setGrinderOffset,
         setHapticsEnabled,
         setKeepAwake,
         setStepSound,

@@ -5,6 +5,7 @@ import { StyledText } from "./StyledText";
 
 interface ButtonProps {
   numberOfLines?: number;
+  onLongPress?: () => void;
   onPress?: () => void;
   selected?: boolean;
   subtitle?: string;
@@ -14,12 +15,17 @@ interface ButtonProps {
 export function StyledButton({
   text,
   onPress,
+  onLongPress,
   selected = false,
   numberOfLines = 1,
   subtitle,
 }: ButtonProps) {
   return (
-    <HapticPressable onPress={onPress} style={styles.button}>
+    <HapticPressable
+      onLongPress={onLongPress}
+      onPress={onPress}
+      style={styles.button}
+    >
       <View style={styles.labelGroup}>
         <StyledText
           numberOfLines={numberOfLines}

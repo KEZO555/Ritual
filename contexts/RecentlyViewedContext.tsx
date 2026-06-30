@@ -7,7 +7,7 @@ import {
 } from "react";
 import { usePersistedState } from "@/hooks/usePersistedState";
 
-const MAX_RECENT = 8;
+const MAX_RECENT = 20;
 
 interface RecentlyViewedContextType {
   addRecent: (id: string) => void;
