@@ -1,7 +1,13 @@
 import type MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router, useSegments } from "expo-router";
 import type { ReactNode, RefObject } from "react";
-import { Animated, type ScrollView, StyleSheet, View } from "react-native";
+import {
+  Animated,
+  KeyboardAvoidingView,
+  type ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { Header } from "@/components/Header";
 import { SwipeBackContainer } from "@/components/SwipeBackContainer";
 import { useInvertColors } from "@/contexts/InvertColorsContext";
@@ -55,7 +61,10 @@ export default function ContentContainer({
 
   return (
     <SwipeBackContainer enabled={canSwipeBack} onSwipeBack={handleBack}>
-      <View
+      {/* Edge-to-edge disables Android's adjustResize, so pad for the
+          keyboard ourselves to keep focused inputs visible. */}
+      <KeyboardAvoidingView
+        behavior="padding"
         style={[
           styles.container,
           { backgroundColor: invertColors ? "white" : "black" },
@@ -129,7 +138,7 @@ export default function ContentContainer({
             </View>
           )}
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </SwipeBackContainer>
   );
 }

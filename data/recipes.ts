@@ -175,14 +175,14 @@ export const recipes: Recipe[] = [
     notes:
       "Match the water temperature to the roast — a little cooler for darker roasts. Resting the plunger about 1cm in makes a vacuum that stops the coffee dripping through as it steeps.",
     roast: "light",
-    grind: "medium",
+    grind: "fine",
     orientation: "standard",
     method: "aeropress",
     coffeeGrams: 11,
     waterGrams: 200,
     waterTempC: 99,
     c40Clicks: 14,
-    totalSeconds: 210,
+    totalSeconds: 180,
     steps: [
       {
         instruction: "Set the brewer in standard position with a paper filter.",
@@ -192,10 +192,9 @@ export const recipes: Recipe[] = [
         at: 10,
         instruction: "Insert the plunger about 1cm to create a vacuum.",
       },
-      { at: 120, instruction: "Gently swirl the brewer." },
-      { at: 150, instruction: "Let the coffee settle and wait." },
-      { at: 180, instruction: "Press gently for about 30 seconds." },
-      { at: 210, instruction: "Serve and enjoy." },
+      { at: 120, instruction: "Gently swirl the brewer, then let it settle." },
+      { at: 150, instruction: "Press gently for about 30 seconds." },
+      { at: 180, instruction: "Serve and enjoy." },
     ],
   },
   {
@@ -300,9 +299,9 @@ export const recipes: Recipe[] = [
     blurb:
       "The clean, light-roast recipe served at Tim Wendelboe's cafe in Oslo.",
     notes:
-      "Use a light roast. Stir exactly three times — fewer under-extracts, more over-extracts.",
+      "Use a light roast and a fine filter grind. Stir exactly three times — fewer under-extracts, more over-extracts.",
     roast: "light",
-    grind: "medium",
+    grind: "fine",
     orientation: "standard",
     method: "aeropress",
     coffeeGrams: 14,
@@ -377,7 +376,7 @@ export const recipes: Recipe[] = [
     coffeeGrams: 18,
     waterGrams: 60,
     waterTempC: 92,
-    c40Clicks: 14,
+    c40Clicks: 18,
     totalSeconds: 140,
     steps: [
       {
@@ -451,7 +450,7 @@ export const recipes: Recipe[] = [
     coffeeGrams: 30,
     waterGrams: 400,
     waterTempC: 93,
-    c40Clicks: 25,
+    c40Clicks: 20,
     totalSeconds: 150,
     steps: [
       {
@@ -1080,15 +1079,17 @@ export const recipes: Recipe[] = [
     name: "Hoffmann's Ultimate V60",
     author: "James Hoffmann",
     blurb:
-      "His one-cup V60 method: a high dose, a quick bloom and a gentle two-stage pour for a sweet, even cup.",
+      "His classic 500ml V60: a high dose, a quick bloom and a gentle two-stage pour for a sweet, even cup.",
+    notes:
+      "Hoffmann brews light roasts with water straight off the boil. Use a medium-fine grind and aim to finish the pours by 1:45.",
     roast: "light",
     grind: "medium",
     method: "v60",
     coffeeGrams: 30,
     waterGrams: 500,
-    waterTempC: 95,
-    c40Clicks: 28,
-    totalSeconds: 225,
+    waterTempC: 100,
+    c40Clicks: 24,
+    totalSeconds: 210,
     steps: [
       { instruction: "Rinse the paper filter with hot water and discard it." },
       { instruction: "Add 30g of coffee and make a small well in the centre." },
@@ -1102,7 +1103,7 @@ export const recipes: Recipe[] = [
       },
       { at: 75, instruction: "Pour up to 500g total, finishing by 1:45." },
       { at: 105, instruction: "Gently swirl the slurry to flatten the bed." },
-      { at: 225, instruction: "Let it draw down completely, then serve." },
+      { at: 210, instruction: "Let it draw down completely, then serve." },
     ],
   },
   {
@@ -1111,6 +1112,8 @@ export const recipes: Recipe[] = [
     author: "Tetsu Kasuya",
     blurb:
       "The World Brewers Cup method. The first 40% of water dials in sweetness and acidity; the last 60% sets the strength.",
+    notes:
+      "Tetsu brews lighter roasts hotter and darker roasts cooler. The smaller 50g first pour leans the cup sweeter — five even 60g pours is the neutral baseline.",
     roast: "light",
     grind: "coarse",
     method: "v60",
@@ -1136,28 +1139,29 @@ export const recipes: Recipe[] = [
     name: "Onyx Classic V60",
     author: "Onyx Coffee Lab",
     blurb:
-      "A balanced cafe-standard pour-over with a short bloom and three even pulse pours.",
+      "Onyx's cafe brew guide: a hot, medium-fine single cup with a bloom and two even pours.",
+    notes:
+      "Onyx brews hot — around 99C — with a medium-fine grind for maximum sweetness and clarity.",
     roast: "medium",
     grind: "medium",
     method: "v60",
-    coffeeGrams: 22,
-    waterGrams: 350,
-    waterTempC: 96,
-    c40Clicks: 25,
-    totalSeconds: 210,
+    coffeeGrams: 15,
+    waterGrams: 250,
+    waterTempC: 99,
+    c40Clicks: 22,
+    totalSeconds: 180,
     steps: [
-      { instruction: "Rinse the filter and add 22g of medium ground coffee." },
+      { instruction: "Rinse the filter and add 15g of medium-fine coffee." },
       { at: 0, instruction: "Pour 50g to bloom and stir gently." },
       { at: 45, instruction: "Pour to 150g total in slow circles." },
       { at: 90, instruction: "Pour to 250g total." },
-      { at: 130, instruction: "Pour to 350g total." },
-      { at: 210, instruction: "Let the bed draw down and serve." },
+      { at: 180, instruction: "Let the bed draw down and serve." },
     ],
   },
   {
     id: "hedrick-beginner-pour-over",
-    name: "Lance Hedrick Beginner Pour Over",
-    author: "Lance Hedrick",
+    name: "Beginner Pour Over",
+    author: "Lance Hedrick style",
     blurb:
       "A forgiving, high-agitation single pour that is hard to get wrong and easy to dial in.",
     roast: "medium",
@@ -1178,8 +1182,8 @@ export const recipes: Recipe[] = [
   },
   {
     id: "wendelboe-v60",
-    name: "Wendelboe Nordic V60",
-    author: "Tim Wendelboe",
+    name: "Nordic Pour Over",
+    author: "Nordic style",
     blurb: "A clean, tea-like pour-over for delicate Nordic light roasts.",
     roast: "light",
     grind: "medium",
@@ -1199,24 +1203,31 @@ export const recipes: Recipe[] = [
   },
   {
     id: "april-simple-v60",
-    name: "April Simple V60",
+    name: "April Six-Pour V60",
     author: "April Coffee",
     blurb:
-      "A modern, low-agitation recipe with three pours for a clean, sweet, repeatable cup.",
+      "April's official recipe: six even 50g pours, poured with intention to agitate, for a clean, balanced cup.",
+    notes:
+      "Pour each 50g with some energy — the agitation is deliberate. Use a coarse grind so the bed still drains freely.",
     roast: "light",
-    grind: "medium",
+    grind: "coarse",
     method: "v60",
-    coffeeGrams: 18,
+    coffeeGrams: 20,
     waterGrams: 300,
-    waterTempC: 96,
-    c40Clicks: 24,
-    totalSeconds: 195,
+    waterTempC: 92,
+    c40Clicks: 30,
+    totalSeconds: 210,
     steps: [
-      { instruction: "Rinse the filter and add 18g of coffee." },
-      { at: 0, instruction: "Pour 50g to bloom and swirl." },
-      { at: 45, instruction: "Pour to 150g total." },
-      { at: 90, instruction: "Pour to 300g total." },
-      { at: 195, instruction: "Let it draw down and serve." },
+      {
+        instruction: "Rinse the filter and add 20g of coarsely ground coffee.",
+      },
+      { at: 0, instruction: "Pour 50g to wet the grounds." },
+      { at: 40, instruction: "Pour to 100g total." },
+      { at: 70, instruction: "Pour to 150g total." },
+      { at: 100, instruction: "Pour to 200g total." },
+      { at: 130, instruction: "Pour to 250g total." },
+      { at: 160, instruction: "Pour to 300g total." },
+      { at: 210, instruction: "Let it draw down and serve." },
     ],
   },
   {
@@ -1250,12 +1261,14 @@ export const recipes: Recipe[] = [
     author: "Matt Winton",
     blurb:
       "A five-pour championship recipe: equal 60g pours every 30 seconds for a clean, sweet, repeatable cup.",
+    notes:
+      "Winton waits about 30 seconds between pours, or until the bed just runs dry. Expect a slow final drawdown.",
     roast: "light",
     grind: "medium",
     method: "v60",
     coffeeGrams: 20,
     waterGrams: 300,
-    waterTempC: 95,
+    waterTempC: 93,
     c40Clicks: 26,
     totalSeconds: 210,
     steps: [
@@ -1273,21 +1286,26 @@ export const recipes: Recipe[] = [
     name: "Kurasu Kyoto V60",
     author: "Kurasu",
     blurb:
-      "A cafe-standard three-pour recipe tuned for bright, aromatic light roasts.",
+      "The Kyoto cafe's single-cup recipe: a small seed-hole bloom and two gentle pours.",
+    notes:
+      "Make a small well in the centre of the grounds before blooming so the water saturates evenly.",
     roast: "light",
     grind: "medium",
     method: "v60",
-    coffeeGrams: 15,
-    waterGrams: 250,
+    coffeeGrams: 12,
+    waterGrams: 200,
     waterTempC: 92,
     c40Clicks: 24,
-    totalSeconds: 195,
+    totalSeconds: 120,
     steps: [
-      { instruction: "Rinse the filter and add 15g of coffee." },
-      { at: 0, instruction: "Pour 45g to bloom and swirl gently." },
-      { at: 40, instruction: "Pour to 150g total in slow circles." },
-      { at: 90, instruction: "Pour to 250g total." },
-      { at: 195, instruction: "Let it finish dripping and serve." },
+      {
+        instruction:
+          "Rinse the filter, add 12g of coffee and make a small well in the centre.",
+      },
+      { at: 0, instruction: "Pour 25g into the well to bloom." },
+      { at: 30, instruction: "Pour to 110g total in slow circles." },
+      { at: 60, instruction: "Pour to 200g total." },
+      { at: 120, instruction: "Let it finish dripping and serve." },
     ],
   },
   {
@@ -1301,7 +1319,7 @@ export const recipes: Recipe[] = [
     method: "v60",
     coffeeGrams: 36,
     waterGrams: 600,
-    waterTempC: 95,
+    waterTempC: 96,
     c40Clicks: 28,
     totalSeconds: 240,
     steps: [
@@ -1324,8 +1342,8 @@ export const recipes: Recipe[] = [
   },
   {
     id: "wettpress-winner",
-    name: "Wettpress Winner",
-    author: "Paige Wallhausser",
+    name: "Juicy Inverted",
+    author: "Community pick",
     blurb:
       "A long inverted steep that draws bright, juicy fruit from a light-roast coffee.",
     roast: "light",

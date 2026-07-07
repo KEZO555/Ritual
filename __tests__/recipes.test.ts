@@ -102,7 +102,7 @@ describe("recipeMetaLabel", () => {
     const label = recipeMetaLabel(recipe);
     expect(label).toContain("AeroPress");
     expect(label).toContain("1:");
-    expect(label).toContain("3:30");
+    expect(label).toContain("3:00");
   });
 });
 
