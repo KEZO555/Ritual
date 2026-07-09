@@ -53,12 +53,13 @@ export default function RecipesScreen() {
           accessibilityLabel="Choose brew method"
           accessibilityRole="button"
           onPress={() => setMethodOpen((open) => !open)}
+          style={styles.methodButton}
         >
           <StyledText style={styles.methodCurrent}>
             {METHOD_LABELS[method]}
-            <StyledText style={styles.methodChevron}>
-              {methodOpen ? "  ▴" : "  ▾"}
-            </StyledText>
+          </StyledText>
+          <StyledText style={styles.methodChevron}>
+            {methodOpen ? "▲" : "▼"}
           </StyledText>
         </HapticPressable>
         {methodOpen
@@ -121,12 +122,17 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: n(16),
   },
+  methodButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: n(12),
+  },
   methodCurrent: {
     fontSize: n(22),
     textDecorationLine: "underline",
   },
   methodChevron: {
-    fontSize: n(16),
+    fontSize: n(13),
     opacity: 0.6,
   },
   methodOption: {
