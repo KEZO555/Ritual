@@ -1470,6 +1470,161 @@ export const recipes: Recipe[] = [
     ],
   },
   {
+    id: "orea-dara-o1",
+    name: "The Dara",
+    author: "Dara (Madrid)",
+    blurb: "A gentle four-pour O1 recipe from Orea's guides.",
+    notes: "Use the Orea Wave filter and pour in slow spirals.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-o1",
+    coffeeGrams: 12,
+    waterGrams: 200,
+    waterTempC: 94,
+    c40Clicks: 22,
+    totalSeconds: 165,
+    steps: [
+      { instruction: "Rinse the filter and add 12g of coffee." },
+      { at: 0, instruction: "Spiral pour to 40g." },
+      { at: 40, instruction: "Pour to 90g total." },
+      { at: 80, instruction: "Pour to 150g total." },
+      { at: 120, instruction: "Pour to 200g total." },
+      { at: 165, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-the-wide",
+    name: "The Wide",
+    author: "Orea",
+    blurb:
+      "A low-dose, fine-grind O1 recipe with long waits for a slow, deep extraction.",
+    notes:
+      "Flat Orea paper with the Negotiator. Pour half circular, half into the centre. Expect a long drawdown.",
+    roast: "light",
+    grind: "fine",
+    method: "orea-o1",
+    coffeeGrams: 10,
+    waterGrams: 200,
+    waterTempC: 96,
+    c40Clicks: 16,
+    totalSeconds: 240,
+    steps: [
+      { instruction: "Rinse the filter and add 10g of coffee." },
+      { at: 0, instruction: "Spiral pour to 50g." },
+      {
+        at: 60,
+        instruction: "Pour to 125g total, half circular and half centre.",
+      },
+      { at: 120, instruction: "Pour to 200g total the same way." },
+      { at: 240, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-the-fine-o1",
+    name: "The Fine",
+    author: "Orea",
+    blurb:
+      "A community favourite: one continuous fine-grind pour, done in two minutes.",
+    notes:
+      "Use the Orea Wave filter. One single pour: start in circles, finish into the centre.",
+    roast: "light",
+    grind: "fine",
+    method: "orea-o1",
+    coffeeGrams: 12,
+    waterGrams: 200,
+    waterTempC: 94,
+    c40Clicks: 17,
+    totalSeconds: 120,
+    steps: [
+      { instruction: "Rinse the filter and add 12g of coffee." },
+      {
+        at: 0,
+        instruction:
+          "Pour 50g in circles, then the remaining 150g into the centre, to 200g total.",
+      },
+      { at: 120, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-the-techno",
+    name: "The Techno",
+    author: "Mordy (Berlin)",
+    blurb:
+      "A four-pour O1 recipe that shifts from circular to central pours as it goes.",
+    notes:
+      "Flat Orea paper with the Negotiator. The third pour splits 20g circular, 20g central; the last goes straight to the centre.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-o1",
+    coffeeGrams: 12,
+    waterGrams: 200,
+    waterTempC: 94,
+    c40Clicks: 24,
+    totalSeconds: 165,
+    steps: [
+      { instruction: "Rinse the filter and add 12g of coffee." },
+      { at: 0, instruction: "Circular pour to 40g." },
+      { at: 30, instruction: "Circular pour to 120g total." },
+      {
+        at: 80,
+        instruction: "Pour to 160g total: 20g circular, then 20g central.",
+      },
+      { at: 105, instruction: "Central pour to 200g total." },
+      { at: 165, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-the-ice",
+    name: "The Ice",
+    author: "Orea",
+    blurb:
+      "Orea's official flash brew: concentrated hot pours straight onto a carafe of ice.",
+    notes:
+      "Use the Orea Wave filter. The 140g of ice in the carafe melts into the brew to complete the ratio.",
+    roast: "light",
+    grind: "medium",
+    method: "orea-o1",
+    coffeeGrams: 18,
+    waterGrams: 160,
+    waterTempC: 94,
+    c40Clicks: 23,
+    totalSeconds: 120,
+    steps: [
+      {
+        instruction:
+          "Add 140g of ice to the carafe. Rinse the filter and add 18g of coffee.",
+      },
+      { at: 0, instruction: "Gentle spiral pour to 40g." },
+      { at: 40, instruction: "Pour to 80g total." },
+      { at: 60, instruction: "Pour to 120g total." },
+      { at: 80, instruction: "Pour to 160g total." },
+      { at: 120, instruction: "Let it draw down, swirl the carafe and serve." },
+    ],
+  },
+  {
+    id: "orea-the-bright",
+    name: "The Bright",
+    author: "Orea",
+    blurb:
+      "A bigger, faster O1 brew: three quick circular pours for a bright 300g cup.",
+    notes: "Use the Orea Wave filter and keep the pours moving.",
+    roast: "light",
+    grind: "medium",
+    method: "orea-o1",
+    coffeeGrams: 18,
+    waterGrams: 300,
+    waterTempC: 94,
+    c40Clicks: 22,
+    totalSeconds: 150,
+    steps: [
+      { instruction: "Rinse the filter and add 18g of coffee." },
+      { at: 0, instruction: "Circular pour to 75g." },
+      { at: 30, instruction: "Pour to 150g total." },
+      { at: 60, instruction: "Pour to 300g total." },
+      { at: 150, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
     id: "orea-easy-does-it-z1",
     name: "Easy Does It Z1",
     author: "Orea",
@@ -1614,6 +1769,461 @@ export const recipes: Recipe[] = [
       { at: 85, instruction: "Pour to 170g total." },
       { at: 135, instruction: "Pour to 270g total." },
       { at: 195, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-quan-picolot",
+    name: "Brian Quan's Picolot",
+    author: "Brian Quan",
+    blurb:
+      "Two max-speed pours, then a slow column-fed finish that adapts to the coffee.",
+    notes:
+      "Paper filter with the MeloDrip. For the final pour keep a small water column above the bed, pouring at about 2-3 g/s.",
+    roast: "light",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 15,
+    waterGrams: 250,
+    waterTempC: 95,
+    c40Clicks: 22,
+    totalSeconds: 180,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 15g of coffee.",
+      },
+      { at: 0, instruction: "Pour to 60g as fast as you can." },
+      { at: 60, instruction: "Fast pour to 160g total." },
+      {
+        at: 105,
+        instruction:
+          "When the bed almost drains, pour slowly to 250g total, keeping a small column of water.",
+      },
+      { at: 180, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-lazy-sunday",
+    name: "Lazy Sunday",
+    author: "Orea",
+    blurb: "Orea's easy-going three-pour Z1 recipe.",
+    notes: "Paper filter with the MeloDrip. Slow, relaxed spiral pours.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 15,
+    waterGrams: 250,
+    waterTempC: 96,
+    c40Clicks: 22,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 15g of coffee.",
+      },
+      { at: 0, instruction: "Spiral pour to 50g." },
+      { at: 40, instruction: "Pour to 150g total." },
+      { at: 105, instruction: "Pour to 250g total." },
+      { at: 165, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-dara-z1",
+    name: "The Dara Z1",
+    author: "Dara (Madrid)",
+    blurb: "The Madrid four-pour recipe, brewed zero-bypass on the Z1.",
+    notes: "Paper filter with the MeloDrip.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 12,
+    waterGrams: 200,
+    waterTempC: 94,
+    c40Clicks: 22,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 12g of coffee.",
+      },
+      { at: 0, instruction: "Spiral pour to 40g." },
+      { at: 40, instruction: "Pour to 90g total." },
+      { at: 80, instruction: "Pour to 150g total." },
+      { at: 120, instruction: "Pour to 200g total." },
+      { at: 165, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-dara-a",
+    name: "The Dara(A)",
+    author: "Dara (Madrid)",
+    blurb: "Dara's bigger, cooler Z1 variant with four pours.",
+    notes: "Paper filter with the MeloDrip.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 15,
+    waterGrams: 250,
+    waterTempC: 92,
+    c40Clicks: 22,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 15g of coffee.",
+      },
+      { at: 0, instruction: "Spiral pour to 50g." },
+      { at: 40, instruction: "Pour to 150g total." },
+      { at: 90, instruction: "Pour to 200g total." },
+      { at: 120, instruction: "Pour to 250g total." },
+      { at: 165, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-the-aussie",
+    name: "The Aussie",
+    author: "Orea",
+    blurb:
+      "Hot and coarse, inspired by Australian Brewers Cup competitors: five even pours at 97C.",
+    notes: "Paper filter with the MeloDrip.",
+    roast: "light",
+    grind: "coarse",
+    method: "orea-z1",
+    coffeeGrams: 17,
+    waterGrams: 250,
+    waterTempC: 97,
+    c40Clicks: 28,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 17g of coffee.",
+      },
+      { at: 0, instruction: "Spiral pour to 50g." },
+      { at: 40, instruction: "Pour to 100g total." },
+      { at: 70, instruction: "Pour to 150g total." },
+      { at: 100, instruction: "Pour to 200g total." },
+      { at: 130, instruction: "Pour to 250g total." },
+      { at: 165, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-the-hybrid",
+    name: "The Hybrid",
+    author: "Matteo D'Ottavio",
+    blurb:
+      "Percolation and immersion in one brew, using the Z1's Switch valve.",
+    notes:
+      "Needs the Switch adapter and the MeloDrip. The valve closes for the bloom and final steep, opens in between.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 16,
+    waterGrams: 260,
+    waterTempC: 94,
+    c40Clicks: 26,
+    totalSeconds: 210,
+    steps: [
+      {
+        instruction:
+          "Fit the Switch adapter and MeloDrip, rinse the filter and add 16g of coffee. Close the valve.",
+      },
+      { at: 0, instruction: "Spiral pour to 60g with the valve closed." },
+      { at: 40, instruction: "Open the valve and pour to 160g total." },
+      { at: 100, instruction: "Close the valve and pour to 260g total." },
+      { at: 180, instruction: "Open the valve and let it drain." },
+      { at: 210, instruction: "Serve." },
+    ],
+  },
+  {
+    id: "orea-the-micro",
+    name: "The Micro",
+    author: "Orea",
+    blurb: "A tiny 10g valve brew — no filter tricks, just the Switch.",
+    notes:
+      "Needs the Switch adapter; no MeloDrip. Pour the main fill slowly, about 3 g/s.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 10,
+    waterGrams: 170,
+    waterTempC: 95,
+    c40Clicks: 22,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Fit the Switch adapter, rinse the filter and add 10g of coffee.",
+      },
+      { at: 0, instruction: "With the valve open, spiral pour to 20g." },
+      {
+        at: 40,
+        instruction:
+          "Close the valve and pour slowly to 170g total, about 3 g/s.",
+      },
+      { at: 120, instruction: "Open the valve and let it drain." },
+      { at: 165, instruction: "Serve." },
+    ],
+  },
+  {
+    id: "orea-the-scandi",
+    name: "The Scandi",
+    author: "Orea",
+    blurb: "Two big, fast pours — a Nordic-style light-roast brew on the Z1.",
+    notes:
+      "Paper filter with the MeloDrip. Finish each 100g pour within 20 seconds.",
+    roast: "light",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 12,
+    waterGrams: 200,
+    waterTempC: 93,
+    c40Clicks: 22,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 12g of coffee.",
+      },
+      { at: 0, instruction: "Circular pour to 100g within 20 seconds." },
+      { at: 75, instruction: "Circular pour to 200g total within 20 seconds." },
+      { at: 165, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-four-six-z1",
+    name: "The Four Six",
+    author: "Tetsu Kasuya",
+    blurb: "Kasuya's 4:6 structure adapted by Orea for the Z1.",
+    notes:
+      "Paper filter with the MeloDrip. The first two pours set sweetness, the last three set strength.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 14,
+    waterGrams: 225,
+    waterTempC: 94,
+    c40Clicks: 24,
+    totalSeconds: 180,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 14g of coffee.",
+      },
+      { at: 0, instruction: "Circular pour to 35g." },
+      { at: 40, instruction: "Pour to 90g total." },
+      { at: 80, instruction: "Pour to 135g total." },
+      { at: 105, instruction: "Pour to 180g total." },
+      { at: 125, instruction: "Pour to 225g total." },
+      { at: 180, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-the-clever",
+    name: "The Clever",
+    author: "Orea",
+    blurb:
+      "A full-immersion Z1 brew based on James Hoffmann's Clever recipe: water first, then coffee.",
+    notes:
+      "Needs the Switch adapter; no MeloDrip. Adding water before coffee keeps the bed from channeling.",
+    roast: "medium",
+    grind: "fine",
+    method: "orea-z1",
+    coffeeGrams: 10,
+    waterGrams: 166,
+    waterTempC: 92,
+    c40Clicks: 18,
+    totalSeconds: 195,
+    steps: [
+      {
+        instruction:
+          "Fit the Switch adapter and close the valve. Add all 166g of water first.",
+      },
+      {
+        at: 0,
+        instruction: "Add 10g of coffee and mix gently with a spoon.",
+      },
+      { at: 120, instruction: "Open the valve and let it drain." },
+      { at: 195, instruction: "Serve." },
+    ],
+  },
+  {
+    id: "orea-the-cleverer",
+    name: "The Clever(er)",
+    author: "Orea",
+    blurb: "A stronger, smaller take on the Clever-style immersion brew.",
+    notes: "Needs the Switch adapter; no MeloDrip.",
+    roast: "medium",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 12,
+    waterGrams: 150,
+    waterTempC: 94,
+    c40Clicks: 22,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Fit the Switch adapter and close the valve. Add all 150g of water first.",
+      },
+      {
+        at: 0,
+        instruction: "Add 12g of coffee and mix gently with a spoon.",
+      },
+      { at: 120, instruction: "Open the valve and let it drain." },
+      { at: 165, instruction: "Serve." },
+    ],
+  },
+  {
+    id: "orea-aero-jibbi",
+    name: "The Aero Jibbi",
+    author: "Jibbi Little",
+    blurb:
+      "An AeroPress-style concentrate on the Z1 from the Australian champion, finished with bypass water.",
+    notes:
+      "Needs the Switch adapter; no MeloDrip. After draining, add 50-75g of bypass water at the same temperature to taste.",
+    roast: "light",
+    grind: "coarse",
+    method: "orea-z1",
+    coffeeGrams: 18,
+    waterGrams: 94,
+    waterTempC: 90,
+    c40Clicks: 28,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Fit the Switch adapter and close the valve. Add all 94g of water first.",
+      },
+      { at: 0, instruction: "Add 18g of coffee and stir gently 32 times." },
+      { at: 90, instruction: "Open the valve and let it drain." },
+      { at: 135, instruction: "Add 50-75g of bypass water to taste." },
+      { at: 165, instruction: "Serve." },
+    ],
+  },
+  {
+    id: "orea-the-caramel",
+    name: "The Caramel",
+    author: "Orea",
+    blurb:
+      "A valve-controlled concentrate finished with cool bypass water for caramel sweetness.",
+    notes:
+      "Needs the Switch adapter and the MeloDrip. The finishing bypass water should be much cooler, around 60-75C, added to taste.",
+    roast: "medium",
+    grind: "coarse",
+    method: "orea-z1",
+    coffeeGrams: 18,
+    waterGrams: 136,
+    waterTempC: 94,
+    c40Clicks: 28,
+    totalSeconds: 210,
+    steps: [
+      {
+        instruction:
+          "Fit the Switch adapter and MeloDrip, rinse the filter and add 18g of coffee. Close the valve.",
+      },
+      { at: 0, instruction: "Bloom with 36g, valve closed." },
+      { at: 40, instruction: "Open the valve and let it drain." },
+      {
+        at: 50,
+        instruction: "Close the valve and pour 100g slowly to 136g total.",
+      },
+      {
+        at: 80,
+        instruction: "Remove the MeloDrip and stir gently for 10 seconds.",
+      },
+      { at: 170, instruction: "Open the valve and let it drain." },
+      { at: 200, instruction: "Add 60-75g of cooler bypass water to taste." },
+      { at: 210, instruction: "Serve." },
+    ],
+  },
+  {
+    id: "orea-the-tetsu",
+    name: "The Tetsu",
+    author: "Tetsu Kasuya",
+    blurb:
+      "Kasuya's two-temperature valve brew: hot pours for flavour, an 80C finish for softness.",
+    notes:
+      "Needs the Switch adapter and the MeloDrip. The final pour uses cooler water, around 80C.",
+    roast: "medium",
+    grind: "coarse",
+    method: "orea-z1",
+    coffeeGrams: 20,
+    waterGrams: 300,
+    waterTempC: 94,
+    c40Clicks: 28,
+    totalSeconds: 195,
+    steps: [
+      {
+        instruction:
+          "Fit the Switch adapter and MeloDrip, rinse the filter and add 20g of coffee. Close the valve.",
+      },
+      { at: 0, instruction: "Pour to 60g with the valve closed." },
+      { at: 40, instruction: "Open the valve and pour to 120g total." },
+      { at: 90, instruction: "Pour to 200g total." },
+      {
+        at: 120,
+        instruction: "Close the valve and pour to 300g total with 80C water.",
+      },
+      { at: 165, instruction: "Open the valve and let it drain." },
+      { at: 195, instruction: "Serve." },
+    ],
+  },
+  {
+    id: "orea-the-fine-z1",
+    name: "The Fine Z1",
+    author: "Orea",
+    blurb: "A low-dose fine grind and one slow pour on the zero-bypass Z1.",
+    notes:
+      "Paper filter with the MeloDrip. Pour the main fill slowly, about 3 g/s.",
+    roast: "light",
+    grind: "fine",
+    method: "orea-z1",
+    coffeeGrams: 10,
+    waterGrams: 200,
+    waterTempC: 92,
+    c40Clicks: 18,
+    totalSeconds: 165,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 10g of coffee.",
+      },
+      { at: 0, instruction: "Spiral pour to 40g." },
+      {
+        at: 40,
+        instruction: "Pour slowly to 200g total, about 3 g/s.",
+      },
+      { at: 165, instruction: "Let it draw down and serve." },
+    ],
+  },
+  {
+    id: "orea-the-pulse",
+    name: "The Pulse",
+    author: "Martin Wölfl",
+    blurb:
+      "The champion's five-pulse Z1 recipe with widening gaps between pours.",
+    notes:
+      "Paper filter with the MeloDrip. Each pour is 40g; the rests get longer as the brew goes.",
+    roast: "light",
+    grind: "medium",
+    method: "orea-z1",
+    coffeeGrams: 12,
+    waterGrams: 200,
+    waterTempC: 96,
+    c40Clicks: 24,
+    totalSeconds: 200,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, fit the MeloDrip and add 12g of coffee.",
+      },
+      { at: 0, instruction: "Circular pour to 40g." },
+      { at: 40, instruction: "Pour to 80g total." },
+      { at: 85, instruction: "Pour to 120g total." },
+      { at: 135, instruction: "Pour to 160g total." },
+      { at: 170, instruction: "Pour to 200g total." },
+      { at: 200, instruction: "Let it draw down and serve." },
     ],
   },
   {
