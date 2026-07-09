@@ -22,6 +22,7 @@ export default function RecipesScreen() {
   const { defaultMethod } = useSettings();
   const { recent } = useRecentlyViewed();
   const [method, setMethod] = useState<BrewMethod>(defaultMethod);
+  const [methodOpen, setMethodOpen] = useState(false);
 
   // Adopt the saved default tab once the persisted setting has hydrated.
   useEffect(() => {
@@ -47,19 +48,34 @@ export default function RecipesScreen() {
         onPress: () => router.push("/create-recipe"),
       }}
     >
-      <View style={styles.tabs}>
-        {BROWSE_METHODS.map((m) => (
-          <HapticPressable key={m} onPress={() => setMethod(m)}>
-            <StyledText
-              style={[
-                styles.tab,
-                method === m ? styles.tabActive : styles.tabIdle,
-              ]}
-            >
-              {METHOD_LABELS[m]}
+      <View style={styles.methodSelect}>
+        <HapticPressable
+          accessibilityLabel="Choose brew method"
+          accessibilityRole="button"
+          onPress={() => setMethodOpen((open) => !open)}
+        >
+          <StyledText style={styles.methodCurrent}>
+            {METHOD_LABELS[method]}
+            <StyledText style={styles.methodChevron}>
+              {methodOpen ? "  ▴" : "  ▾"}
             </StyledText>
-          </HapticPressable>
-        ))}
+          </StyledText>
+        </HapticPressable>
+        {methodOpen
+          ? BROWSE_METHODS.filter((m) => m !== method).map((m) => (
+              <HapticPressable
+                key={m}
+                onPress={() => {
+                  setMethod(m);
+                  setMethodOpen(false);
+                }}
+              >
+                <StyledText style={styles.methodOption}>
+                  {METHOD_LABELS[m]}
+                </StyledText>
+              </HapticPressable>
+            ))
+          : null}
       </View>
       {recipesForMethod.map((recipe) => (
         <StyledButton
@@ -101,18 +117,20 @@ export default function RecipesScreen() {
 }
 
 const styles = StyleSheet.create({
-  tabs: {
-    flexDirection: "row",
-    gap: n(28),
+  methodSelect: {
+    width: "100%",
+    gap: n(16),
   },
-  tab: {
+  methodCurrent: {
     fontSize: n(22),
-  },
-  tabActive: {
-    opacity: 1,
     textDecorationLine: "underline",
   },
-  tabIdle: {
+  methodChevron: {
+    fontSize: n(16),
+    opacity: 0.6,
+  },
+  methodOption: {
+    fontSize: n(22),
     opacity: 0.4,
   },
   recentSection: {

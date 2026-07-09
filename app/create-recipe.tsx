@@ -20,7 +20,7 @@ import {
 } from "@/data/recipes";
 import { n } from "@/utils/scaling";
 
-const METHODS: BrewMethod[] = ["aeropress", "v60"];
+const METHODS: BrewMethod[] = ["aeropress", "v60", "orea-o1", "orea-z1"];
 const ROASTS: Roast[] = ["light", "medium", "dark"];
 const GRINDS: Grind[] = ["fine", "medium", "coarse"];
 const ORIENTATIONS: Orientation[] = ["standard", "inverted"];

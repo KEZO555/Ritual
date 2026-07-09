@@ -27,6 +27,28 @@ function funnelHalfWidth(fraction: number): number {
   return FUNNEL_TOP_HALF * fraction;
 }
 
+// Flat-bottom dripper (Orea O1 / Z1) geometry: a truncated cone with a
+// wide flat bed, drawn as a trapezoid.
+const FLAT_HEIGHT = n(140);
+const FLAT_TOP_HALF = n(100);
+const FLAT_BASE_HALF = n(58);
+const FLAT_INSET = FLAT_TOP_HALF - FLAT_BASE_HALF; // slant per side
+const FLAT_GRAMS_PER_SCOOP = 10; // generic level coffee scoop
+
+// Trapezoid anchored at the flat base, filled up to a height fraction.
+function flatFillStyle(fraction: number, color: string) {
+  return {
+    width: FLAT_BASE_HALF * 2,
+    height: 0,
+    borderBottomWidth: FLAT_HEIGHT * fraction,
+    borderBottomColor: color,
+    borderLeftWidth: FLAT_INSET * fraction,
+    borderLeftColor: "transparent",
+    borderRightWidth: FLAT_INSET * fraction,
+    borderRightColor: "transparent",
+  } as const;
+}
+
 // Border-triangle that fills the cone from the drip hole up to a height,
 // pointing down so the apex sits at the drip hole.
 function funnelFillStyle(fraction: number, color: string) {
@@ -87,12 +109,93 @@ export function BrewVisual({
       <V60Visual coffeeGrams={coffeeGrams} fg={fg} waterGrams={waterGrams} />
     );
   }
+  if (method === "orea-o1" || method === "orea-z1") {
+    return (
+      <FlatBedVisual
+        coffeeGrams={coffeeGrams}
+        fg={fg}
+        label={method === "orea-o1" ? "Orea O1 dripper" : "Orea Z1 dripper"}
+        waterGrams={waterGrams}
+      />
+    );
+  }
   return (
     <AeroPressVisual
       coffeeGrams={coffeeGrams}
       fg={fg}
       waterGrams={waterGrams}
     />
+  );
+}
+
+function FlatBedVisual({
+  coffeeGrams,
+  fg,
+  label,
+  waterGrams,
+}: {
+  coffeeGrams: number;
+  fg: string;
+  label: string;
+  waterGrams: number;
+}) {
+  const coffee = scoopRow(
+    coffeeGrams,
+    FLAT_GRAMS_PER_SCOOP,
+    "level coffee scoop"
+  );
+  // Like the V60: capacity rounds up to the next 100ml so the fill line
+  // stays below the rim.
+  const capacity =
+    (Math.floor(waterGrams / FUNNEL_CAPACITY_STEP) + 1) * FUNNEL_CAPACITY_STEP;
+  const fillFraction = waterGrams / capacity;
+  const fillHalfWidth = FLAT_BASE_HALF + FLAT_INSET * fillFraction;
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.row}>
+        <StyledText style={styles.value}>{coffee.value}</StyledText>
+        <StyledText style={styles.hint}>{coffee.hint}</StyledText>
+      </View>
+
+      <View style={styles.row}>
+        <StyledText
+          style={styles.value}
+        >{`Fill to ~${waterGrams}ml`}</StyledText>
+        <StyledText style={styles.hint}>
+          {`${waterGrams}g water · ${label}`}
+        </StyledText>
+      </View>
+
+      <View style={styles.funnelRow}>
+        <View style={styles.flatBed}>
+          <View style={styles.flatLayer}>
+            <View style={[flatFillStyle(1, fg), styles.funnelBody]} />
+          </View>
+          <View style={styles.flatLayer}>
+            <View
+              style={[flatFillStyle(fillFraction, fg), styles.funnelWater]}
+            />
+          </View>
+          <View
+            style={[
+              styles.funnelTarget,
+              { bottom: FLAT_HEIGHT * fillFraction - n(10) },
+            ]}
+          >
+            <View
+              style={[
+                styles.funnelTargetLine,
+                { backgroundColor: fg, width: fillHalfWidth * 2 },
+              ]}
+            />
+            <StyledText style={styles.funnelTargetLabel}>
+              {`${waterGrams}ml`}
+            </StyledText>
+          </View>
+        </View>
+      </View>
+    </View>
   );
 }
 
@@ -304,6 +407,20 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     paddingTop: n(10),
+  },
+  flatBed: {
+    width: FLAT_TOP_HALF * 2 + FUNNEL_SIDE_PAD * 2,
+    height: FLAT_HEIGHT,
+    position: "relative",
+  },
+  flatLayer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   funnel: {
     width: FUNNEL_TOP_HALF * 2 + FUNNEL_SIDE_PAD * 2,

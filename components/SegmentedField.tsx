@@ -58,7 +58,9 @@ const styles = StyleSheet.create({
   },
   options: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: n(26),
+    rowGap: n(12),
   },
   option: {
     fontSize: n(24),
