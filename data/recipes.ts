@@ -255,7 +255,7 @@ export const recipes: Recipe[] = [
       },
       { at: 90, instruction: "Flip the AeroPress onto the cup and swirl." },
       {
-        at: 95,
+        at: 100,
         instruction: "Press slowly and gently until just after the hiss.",
       },
       { at: 120, instruction: "Top with warm milk to serve." },
@@ -308,21 +308,21 @@ export const recipes: Recipe[] = [
     waterGrams: 200,
     waterTempC: 96,
     c40Clicks: 18,
-    totalSeconds: 90,
+    totalSeconds: 120,
     steps: [
       { instruction: "Rinse the paper filter for about 10 seconds." },
       { instruction: "Add 14g of ground coffee." },
       { at: 0, instruction: "Pour 200g of water at 96C." },
       {
-        at: 10,
+        at: 15,
         instruction: "Stir 3 times back to front and attach the handle.",
       },
       {
-        at: 60,
+        at: 90,
         instruction: "Remove the handle and stir 3 times back to front.",
       },
       {
-        at: 65,
+        at: 100,
         instruction:
           "Replace the handle and press using body weight into a large cup.",
       },
@@ -498,7 +498,7 @@ export const recipes: Recipe[] = [
         instruction: "Quickly add 260g of 95C water with no stir and no bloom.",
       },
       {
-        at: 10,
+        at: 15,
         instruction: "Seat the plunger to create a vacuum and let it steep.",
       },
       {
@@ -563,7 +563,7 @@ export const recipes: Recipe[] = [
         instruction:
           "Pour 180g of water in a circular motion and stir thoroughly for 10 seconds.",
       },
-      { at: 40, instruction: "Cap and wait." },
+      { at: 50, instruction: "Cap and wait." },
       { at: 60, instruction: "Flip onto the preheated cup." },
       { at: 65, instruction: "Press slowly for one minute." },
       { at: 120, instruction: "Add 48g of water, stir and serve." },
@@ -1495,8 +1495,8 @@ export const recipes: Recipe[] = [
     steps: [
       { instruction: "Rinse the filter and add 18g of fine ground coffee." },
       { at: 0, instruction: "Pour 70g of water and stir 5 times." },
-      { at: 15, instruction: "Seat the plunger." },
-      { at: 20, instruction: "Press firmly over 20 seconds." },
+      { at: 20, instruction: "Seat the plunger." },
+      { at: 25, instruction: "Press firmly over 20 seconds." },
       { at: 45, instruction: "Serve with a twist of lemon peel." },
     ],
   },
