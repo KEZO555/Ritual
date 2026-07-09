@@ -182,7 +182,7 @@ export const recipes: Recipe[] = [
     waterGrams: 200,
     waterTempC: 99,
     c40Clicks: 14,
-    totalSeconds: 180,
+    totalSeconds: 190,
     steps: [
       {
         instruction: "Set the brewer in standard position with a paper filter.",
@@ -193,8 +193,8 @@ export const recipes: Recipe[] = [
         instruction: "Insert the plunger about 1cm to create a vacuum.",
       },
       { at: 120, instruction: "Gently swirl the brewer, then let it settle." },
-      { at: 150, instruction: "Press gently for about 30 seconds." },
-      { at: 180, instruction: "Serve and enjoy." },
+      { at: 160, instruction: "Press gently for about 30 seconds." },
+      { at: 190, instruction: "Serve and enjoy." },
     ],
   },
   {
@@ -299,9 +299,9 @@ export const recipes: Recipe[] = [
     blurb:
       "The clean, light-roast recipe served at Tim Wendelboe's cafe in Oslo.",
     notes:
-      "Use a light roast and a fine filter grind. Stir exactly three times — fewer under-extracts, more over-extracts.",
+      "Use a light roast. Stir exactly three times — fewer under-extracts, more over-extracts.",
     roast: "light",
-    grind: "fine",
+    grind: "medium",
     orientation: "standard",
     method: "aeropress",
     coffeeGrams: 14,
