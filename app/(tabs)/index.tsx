@@ -1,3 +1,4 @@
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -5,6 +6,7 @@ import ContentContainer from "@/components/ContentContainer";
 import { HapticPressable } from "@/components/HapticPressable";
 import { StyledButton } from "@/components/StyledButton";
 import { StyledText } from "@/components/StyledText";
+import { useInvertColors } from "@/contexts/InvertColorsContext";
 import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useUserRecipes } from "@/contexts/UserRecipesContext";
@@ -14,12 +16,18 @@ import {
   categoriesForMethod,
   getRecipe,
   METHOD_LABELS,
+  recipeMetaLabel,
+  recipes,
 } from "@/data/recipes";
 import { n } from "@/utils/scaling";
+
+// Methods with small catalogues list their recipes directly, no categories.
+const DIRECT_LIST_METHODS: BrewMethod[] = ["orea-o1", "orea-z1"];
 
 export default function RecipesScreen() {
   const { userRecipes, getUserRecipe } = useUserRecipes();
   const { defaultMethod } = useSettings();
+  const { invertColors } = useInvertColors();
   const { recent } = useRecentlyViewed();
   const [method, setMethod] = useState<BrewMethod>(defaultMethod);
   const [methodOpen, setMethodOpen] = useState(false);
@@ -32,7 +40,11 @@ export default function RecipesScreen() {
   const recipesForMethod = userRecipes.filter(
     (recipe) => recipe.method === method
   );
-  const categories = categoriesForMethod(method);
+  const directList = DIRECT_LIST_METHODS.includes(method);
+  const categories = directList ? [] : categoriesForMethod(method);
+  const directRecipes = directList
+    ? recipes.filter((recipe) => recipe.method === method)
+    : [];
   const recentRecipes = recent
     .map((recipeId) => getRecipe(recipeId) ?? getUserRecipe(recipeId))
     .filter((recipe) => recipe !== undefined)
@@ -58,9 +70,12 @@ export default function RecipesScreen() {
           <StyledText style={styles.methodCurrent}>
             {METHOD_LABELS[method]}
           </StyledText>
-          <StyledText style={styles.methodChevron}>
-            {methodOpen ? "▲" : "▼"}
-          </StyledText>
+          <MaterialIcons
+            color={invertColors ? "black" : "white"}
+            name="arrow-forward-ios"
+            size={n(18)}
+            style={methodOpen ? styles.chevronUp : styles.chevronDown}
+          />
         </HapticPressable>
         {methodOpen
           ? BROWSE_METHODS.filter((m) => m !== method).map((m) => (
@@ -98,6 +113,17 @@ export default function RecipesScreen() {
           text={category.name}
         />
       ))}
+      {directRecipes.map((recipe) => (
+        <StyledButton
+          key={recipe.id}
+          numberOfLines={2}
+          onPress={() =>
+            router.push({ pathname: "/recipe", params: { id: recipe.id } })
+          }
+          subtitle={recipeMetaLabel(recipe)}
+          text={recipe.name}
+        />
+      ))}
       {recentRecipes.length > 0 ? (
         <View style={styles.recentSection}>
           <StyledText style={styles.recentHeading}>Recently viewed</StyledText>
@@ -131,9 +157,11 @@ const styles = StyleSheet.create({
     fontSize: n(22),
     textDecorationLine: "underline",
   },
-  methodChevron: {
-    fontSize: n(13),
-    opacity: 0.6,
+  chevronDown: {
+    transform: [{ rotate: "90deg" }],
+  },
+  chevronUp: {
+    transform: [{ rotate: "-90deg" }],
   },
   methodOption: {
     fontSize: n(22),
