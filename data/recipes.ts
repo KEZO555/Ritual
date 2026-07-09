@@ -181,7 +181,7 @@ export const recipes: Recipe[] = [
     coffeeGrams: 11,
     waterGrams: 200,
     waterTempC: 99,
-    c40Clicks: 14,
+    c40Clicks: 18,
     totalSeconds: 190,
     steps: [
       {
@@ -1306,6 +1306,28 @@ export const recipes: Recipe[] = [
       { at: 30, instruction: "Pour to 110g total in slow circles." },
       { at: 60, instruction: "Pour to 200g total." },
       { at: 120, instruction: "Let it finish dripping and serve." },
+    ],
+  },
+  {
+    id: "kezo-v60",
+    name: "Kezo V60",
+    author: "Kezo",
+    blurb:
+      "The house recipe: a long bloom, a rested first pour and a steady finish.",
+    roast: "light",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 15,
+    waterGrams: 250,
+    waterTempC: 94,
+    c40Clicks: 24,
+    totalSeconds: 135,
+    steps: [
+      { instruction: "Rinse the filter and add 15g of coffee." },
+      { at: 0, instruction: "Pour 50g to bloom." },
+      { at: 45, instruction: "Pour to 150g total, then wait 10 seconds." },
+      { at: 65, instruction: "Pour to 250g total." },
+      { at: 135, instruction: "Let it draw down and serve." },
     ],
   },
   {
