@@ -1115,7 +1115,7 @@ export const recipes: Recipe[] = [
     blurb:
       "The World Brewers Cup method. The first 40% of water dials in sweetness and acidity; the last 60% sets the strength.",
     notes:
-      "Tetsu brews lighter roasts hotter and darker roasts cooler. The smaller 50g first pour leans the cup sweeter — five even 60g pours is the neutral baseline.",
+      "Tetsu brews lighter roasts hotter and darker roasts cooler. Five even 60g pours is the neutral baseline; pouring less first (50g, then 70g) leans sweeter, more first leans brighter.",
     roast: "light",
     grind: "coarse",
     method: "v60",
@@ -1128,7 +1128,7 @@ export const recipes: Recipe[] = [
       {
         instruction: "Rinse the filter and add 20g of coarsely ground coffee.",
       },
-      { at: 0, instruction: "Pour 50g and let it bloom." },
+      { at: 0, instruction: "Pour 60g and let it bloom." },
       { at: 45, instruction: "Pour to 120g total to set the sweetness." },
       { at: 90, instruction: "Pour to 180g total." },
       { at: 135, instruction: "Pour to 240g total." },
@@ -1308,6 +1308,43 @@ export const recipes: Recipe[] = [
       { at: 30, instruction: "Pour to 110g total in slow circles." },
       { at: 60, instruction: "Pour to 200g total." },
       { at: 120, instruction: "Let it finish dripping and serve." },
+    ],
+  },
+  {
+    id: "wendelboe-pourover",
+    name: "Tim Wendelboe Pour Over",
+    author: "Tim Wendelboe",
+    blurb:
+      "His cafe standard at 65g per litre: a stirred bloom, a big wetting pour and one slow circular fill.",
+    notes:
+      "Published dose is 32.5g (65g per litre) — rounded to 32g here. If the drawdown takes much longer than a minute, grind coarser; if it races through, grind finer. Stir the brew before serving.",
+    roast: "light",
+    grind: "medium",
+    method: "v60",
+    coffeeGrams: 32,
+    waterGrams: 500,
+    waterTempC: 96,
+    c40Clicks: 26,
+    totalSeconds: 195,
+    steps: [
+      {
+        instruction:
+          "Rinse the filter, add 32g of coffee and shake the bed level.",
+      },
+      { at: 0, instruction: "Pour 60g to bloom and stir with a teaspoon." },
+      {
+        at: 30,
+        instruction: "Pour to 200g total, wetting all the grounds.",
+      },
+      {
+        at: 60,
+        instruction:
+          "Pour in slow circles up to 500g total, finishing by 2:15.",
+      },
+      {
+        at: 195,
+        instruction: "Let it finish dripping, stir the brew and serve.",
+      },
     ],
   },
   {
