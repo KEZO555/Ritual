@@ -11,9 +11,9 @@ import { useRecentlyViewed } from "@/contexts/RecentlyViewedContext";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useUserRecipes } from "@/contexts/UserRecipesContext";
 import {
-  BROWSE_METHODS,
   type BrewMethod,
   categoriesForMethod,
+  DEFAULT_METHODS,
   getRecipe,
   METHOD_LABELS,
   recipeMetaLabel,
@@ -26,16 +26,22 @@ const DIRECT_LIST_METHODS: BrewMethod[] = ["orea-o1", "orea-z1"];
 
 export default function RecipesScreen() {
   const { userRecipes, getUserRecipe } = useUserRecipes();
-  const { defaultMethod } = useSettings();
+  const { defaultMethod, extraMethods } = useSettings();
   const { invertColors } = useInvertColors();
   const { recent } = useRecentlyViewed();
-  const [method, setMethod] = useState<BrewMethod>(defaultMethod);
+  const [selected, setSelected] = useState<BrewMethod>(defaultMethod);
   const [methodOpen, setMethodOpen] = useState(false);
 
   // Adopt the saved default tab once the persisted setting has hydrated.
   useEffect(() => {
-    setMethod(defaultMethod);
+    setSelected(defaultMethod);
   }, [defaultMethod]);
+
+  // AeroPress and V60 always show; extra brewers are enabled in Settings.
+  const visibleMethods: BrewMethod[] = [...DEFAULT_METHODS, ...extraMethods];
+  const method = visibleMethods.includes(selected)
+    ? selected
+    : DEFAULT_METHODS[0];
 
   const recipesForMethod = userRecipes.filter(
     (recipe) => recipe.method === method
@@ -78,19 +84,21 @@ export default function RecipesScreen() {
           />
         </HapticPressable>
         {methodOpen
-          ? BROWSE_METHODS.filter((m) => m !== method).map((m) => (
-              <HapticPressable
-                key={m}
-                onPress={() => {
-                  setMethod(m);
-                  setMethodOpen(false);
-                }}
-              >
-                <StyledText style={styles.methodOption}>
-                  {METHOD_LABELS[m]}
-                </StyledText>
-              </HapticPressable>
-            ))
+          ? visibleMethods
+              .filter((m) => m !== method)
+              .map((m) => (
+                <HapticPressable
+                  key={m}
+                  onPress={() => {
+                    setSelected(m);
+                    setMethodOpen(false);
+                  }}
+                >
+                  <StyledText style={styles.methodOption}>
+                    {METHOD_LABELS[m]}
+                  </StyledText>
+                </HapticPressable>
+              ))
           : null}
       </View>
       {recipesForMethod.map((recipe) => (

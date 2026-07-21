@@ -42,8 +42,6 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
           options={[
             { label: "AeroPress", value: "aeropress" },
             { label: "V60", value: "v60" },
-            { label: "Orea O1", value: "orea-o1" },
-            { label: "Orea Z1", value: "orea-z1" },
           ]}
           value={defaultMethod}
         />

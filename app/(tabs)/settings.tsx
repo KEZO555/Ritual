@@ -9,7 +9,14 @@ import { StyledText } from "@/components/StyledText";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
 import { useInvertColors } from "@/contexts/InvertColorsContext";
 import { useSettings } from "@/contexts/SettingsContext";
-import { type BrewMethod, GRINDERS, type TempUnit } from "@/data/recipes";
+import {
+  type BrewMethod,
+  DEFAULT_METHODS,
+  GRINDERS,
+  METHOD_LABELS,
+  OPTIONAL_METHODS,
+  type TempUnit,
+} from "@/data/recipes";
 import { n } from "@/utils/scaling";
 
 const BACKUP_KEYS = [
@@ -57,7 +64,22 @@ export default function SettingsScreen() {
     setDefaultGrinder,
     grinderOffset,
     setGrinderOffset,
+    extraMethods,
+    setExtraMethods,
   } = useSettings();
+
+  const toggleExtraMethod = (methodKey: BrewMethod, enabled: boolean) => {
+    setExtraMethods(
+      enabled
+        ? [...extraMethods, methodKey]
+        : extraMethods.filter((m) => m !== methodKey)
+    );
+    // Don't leave the default pointing at a brewer that is now hidden.
+    if (!enabled && defaultMethod === methodKey) {
+      setDefaultMethod(DEFAULT_METHODS[0]);
+    }
+  };
+  const enabledMethods: BrewMethod[] = [...DEFAULT_METHODS, ...extraMethods];
 
   const [showImport, setShowImport] = useState(false);
   const [importText, setImportText] = useState("");
@@ -134,14 +156,28 @@ export default function SettingsScreen() {
         <SegmentedField
           label="Default Method"
           onChange={(value) => setDefaultMethod(value as BrewMethod)}
-          options={[
-            { label: "AeroPress", value: "aeropress" },
-            { label: "V60", value: "v60" },
-            { label: "Orea O1", value: "orea-o1" },
-            { label: "Orea Z1", value: "orea-z1" },
-          ]}
+          options={enabledMethods.map((m) => ({
+            label: METHOD_LABELS[m],
+            value: m,
+          }))}
           value={defaultMethod}
         />
+      </View>
+
+      <View style={styles.section}>
+        <StyledText style={styles.heading}>Brew Methods</StyledText>
+        <StyledText style={styles.methodsHint}>
+          AeroPress and V60 are always on. Enable more brewers to add them to
+          the Recipes menu.
+        </StyledText>
+        {OPTIONAL_METHODS.map((m) => (
+          <ToggleSwitch
+            key={m}
+            label={METHOD_LABELS[m]}
+            onValueChange={(enabled) => toggleExtraMethod(m, enabled)}
+            value={extraMethods.includes(m)}
+          />
+        ))}
       </View>
 
       <View style={styles.section}>
@@ -229,6 +265,11 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: n(18),
     opacity: 0.5,
+  },
+  methodsHint: {
+    fontSize: n(16),
+    lineHeight: n(23),
+    opacity: 0.6,
   },
   offsetRow: {
     width: "100%",

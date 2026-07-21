@@ -2713,11 +2713,14 @@ const METHOD_FACETS: Record<BrewMethod, BrowseFacet[]> = {
   "orea-z1": V60_FACETS,
 };
 
+// Methods always shown in the browse dropdown.
+export const DEFAULT_METHODS: BrewMethod[] = ["aeropress", "v60"];
+// Extra brewers the user can enable from Settings.
+export const OPTIONAL_METHODS: BrewMethod[] = ["orea-o1", "orea-z1"];
+
 export const BROWSE_METHODS: BrewMethod[] = [
-  "aeropress",
-  "v60",
-  "orea-o1",
-  "orea-z1",
+  ...DEFAULT_METHODS,
+  ...OPTIONAL_METHODS,
 ];
 
 function buildCategories(): Category[] {
